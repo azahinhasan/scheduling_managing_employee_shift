@@ -39,7 +39,7 @@ const getAllUser = async (req, res) => {
  */
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body); 
+    const user = await User.create(req.body);
     user.save();
     res
       .status(201)
@@ -61,7 +61,7 @@ const createUser = async (req, res) => {
  */
 const getUserByID = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.user_id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "No data found" });
@@ -87,7 +87,7 @@ const getUserByID = async (req, res) => {
  */
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.user_id);
     console.log(res.locals.requestedUser);
 
     if (!user) {
@@ -96,18 +96,21 @@ const updateUser = async (req, res) => {
     const requestedUser = res.locals.requestedUser;
     if (requestedUser.role === "administrator") {
       //if administrator then he can update any info for any user.
-      await User.findByIdAndUpdate(req.params.userId, req.body);
+      await User.findByIdAndUpdate(req.params.user_id, req.body);
     } else if (
       requestedUser.role === "employee" ||
-      res.locals.requestedUser._id === req.params.userId
+      res.locals.requestedUser._id === req.params.user_id
     ) {
       //if employee or user requesting for this profile then he can update his basic info.
-      console.log(req.body)
-      await User.updateOne({_id:req.params.userId}, {
-        full_name: req.body.full_name,
-        email: req.body.email,
-        contact_details: req.body.contact_details,
-      });
+      console.log(req.body);
+      await User.updateOne(
+        { _id: req.params.user_id },
+        {
+          full_name: req.body.full_name,
+          email: req.body.email,
+          contact_details: req.body.contact_details,
+        }
+      );
     } else if (requestedUser.role === "supervisor") {
       //if supervisor then he can update active_status of his employees.
       const verifyEmployee = await SupervisorEmployeeRelations.find({
@@ -115,10 +118,13 @@ const updateUser = async (req, res) => {
         assigned_employees_id: user._id,
       }); //checking is that user is a employee under this supervisor.
 
-      verifyEmployee.length>0 &&
-        (await User.updateOne({_id:req.params.userId}, {
-          active_status: req.body.active_status,
-        }));
+      verifyEmployee.length > 0 &&
+        (await User.updateOne(
+          { _id: req.params.user_id },
+          {
+            active_status: req.body.active_status,
+          }
+        ));
     }
 
     res.status(200).json({ success: true, message: "User updated" });
@@ -141,14 +147,18 @@ const updateUser = async (req, res) => {
  */
 const deleteUser = async (req, res) => {
   try {
-    
-    const user = await User.findById(req.params.userId).populate({
-      path:"role"
+    const user = await User.findById(req.params.user_id).populate({
+      path: "role",
     });
-    if(user.role.role_name==="administrator"){
-      return res.status(400).json({ success: false, message: "Administrator account can not be deleted" });
+    if (user.role.role_name === "administrator") {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Administrator account can not be deleted",
+        });
     }
-    await User.findByIdAndDelete(req.params.userId);
+    await User.findByIdAndDelete(req.params.user_id);
     res
       .status(200)
       .json({ success: true, message: "User deleted", data: user });
@@ -170,7 +180,7 @@ const deleteUser = async (req, res) => {
  */
 const changeUserRole = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).populate({
+    const user = await User.findById(req.params.user_id).populate({
       path: "role",
     });
     const roles = await Role.find();
@@ -197,16 +207,13 @@ const changeUserRole = async (req, res) => {
         }
       );
 
-
       let temp = roles.find((el) => el.role_name === "supervisor");
       if (temp) {
         user.role = temp._id;
       }
     }
     await user.save();
-    res
-      .status(200)
-      .json({ success: true, message: "Updated", data: user });
+    res.status(200).json({ success: true, message: "Updated", data: user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

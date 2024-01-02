@@ -3,10 +3,16 @@ const express = require("express");
 const authCheck = require("../middleware/auth_check");
 const router = express.Router();
 
-router.route("/getAllUser").get(authCheck.haveAccess, userCtrl.getAllUser);
-router.route("/createUser").post(authCheck.haveAccess, userCtrl.createUser);
-router.route("/updateUser/:userId").put(authCheck.haveAccess, userCtrl.updateUser);
-router.route("/changeUserRole/:userId").get(authCheck.haveAccess, userCtrl.changeUserRole);
-router.route("/getUserByID/:userId").get(authCheck.haveAccess, userCtrl.getUserByID);
-router.route("/deleteUser/:userId").delete(authCheck.haveAccess, userCtrl.deleteUser);
+router.route("/get_all").get(authCheck.haveAccess, userCtrl.getAllUser);
+router.route("/create").post(authCheck.haveAccess, userCtrl.createUser);
+router.route("/update/:user_id").put(authCheck.haveAccess, userCtrl.updateUser);
+router
+  .route("/change_role/:user_id")
+  .get(authCheck.haveAccess, userCtrl.changeUserRole);
+router
+  .route("/get_by_id/:user_id")
+  .get(authCheck.haveAccess, userCtrl.getUserByID);
+router
+  .route("/delete/:user_id")
+  .delete(authCheck.haveAccess, userCtrl.deleteUser);
 module.exports = router;
