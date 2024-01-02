@@ -1,5 +1,4 @@
 const Shift = require("../models/shift.model");
-const CrewMember = require("../models/crew_member.model");
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
 
@@ -17,7 +16,7 @@ const jwt = require("jsonwebtoken");
  * @requires ../models/shift.model
  * @returns {JSON} -  if success returns the array of object as data else error.
  */
-const getShiftList = async (req, res) => {
+const getAllShift = async (req, res) => {
   try {
     const list = await Shift.find().populate({
       path: "assigned_employee",
@@ -78,12 +77,10 @@ const createShift = async (req, res) => {
     if(sameShiftExist){
       return res.status(400).json({ success: false, message: "Same Type Shift Already Exist!" });
     }
-    
+
     await Shift.create(req.body);
 
-    res
-      .status(200)
-      .json({ success: true, message: "Created Successfully", data: newData });
+    res.status(200).json({ success: true, message: "Created Successfully"});
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Something Want Wrong!" });
@@ -163,13 +160,14 @@ const modifyShiftOfEmployee = async (req, res) => {
     }
 
     const new_shift = await Shift.findOne({ _id: req.body.new_shift_id });
+
     const current_shift = await Shift.findOne({_id: req.body.current_shift_id});
-  
+
     switch (req.body.action_type) {
       case "add":
         //if employee do not have previous shift in given date
         //require from client employee_id,new_shift
-        if (!req.body.new_shift) {
+        if (!req.body.new_shift_id) {
           return  res.status(400).json({ success: false, message: "New shift id require" });
         }
         let temp = await Shift.findOne({
@@ -184,11 +182,12 @@ const modifyShiftOfEmployee = async (req, res) => {
       case "switch":
         //changing shift in same day
         //require from client employee_id,new_shift,current_shift_id
-        if (!req.body.current_shift_id||!req.body.new_shift) {
+        if (!req.body.current_shift_id||!req.body.new_shift_id) {
           return  res.status(400).json({ success: false, message: "Current and new shift id require" });
         }
-
-        if (current_shift.date === new_shift.date) {
+        
+        if (current_shift.date.toString() === new_shift.date.toString() ) {
+          console.log("dddddddddddd")
           new_shift.assigned_employee.push(req.body.employee_id);
           await Shift.findOneAndUpdate(
             { _id: current_shift._id },
@@ -219,7 +218,7 @@ const modifyShiftOfEmployee = async (req, res) => {
 };
 
 module.exports = {
-  getShiftList,
+  getAllShift,
   createShift,
   getShiftByID,
   deleteShift,

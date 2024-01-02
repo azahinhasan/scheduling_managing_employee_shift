@@ -22,6 +22,12 @@ const RoleSchema = new mongoose.Schema({
           "user/delete",
           "supervisor_employee_relations/all_assigned_employee",
           "supervisor_employee_relations/tag_employee_to_supervisor",
+          "shift/get_all",
+          "shift/create",
+          "shift/update",
+          "shift/modify_employees_shift",
+          "shift/get_by_id",
+          "shift/delete",
         ];
       } else if (this.role_name === "supervisor") {
         return [

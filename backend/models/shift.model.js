@@ -17,11 +17,11 @@ const ShiftSchema = new mongoose.Schema({
   //   required: [true, "Please End Date"],
   // },
   start_time: {
-    type: Date,
+    type: String, //24h format time
     required: [true, "Please Start Time"],
   },
   end_time: {
-    type: Date,
+    type: String, //24h format time
     required: [true, "Please End Time"],
   },
   assigned_employee: [
