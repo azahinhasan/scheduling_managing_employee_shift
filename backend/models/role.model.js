@@ -7,18 +7,41 @@ const RoleSchema = new mongoose.Schema({
     required: [true, "Please enter name "],
     enum: ["administrator", "supervisor", "employee"],
   },
-  permissions:[],
+  permissions: {
+    type: Array,
+    default: function () {
+      if (this.role_name === "administrator") {
+        return [
+          "role/get_all",
+          "role/create",
+          "user/get_all",
+          "user/create",
+          "user/update",
+          "user/change_role",
+          "user/get_by_id",
+          "user/delete",
+          "supervisor_employee_relations/all_assigned_employee",
+          "supervisor_employee_relations/tag_employee_to_supervisor",
+        ];
+      } else if (this.role_name === "supervisor") {
+        return [
+          "user/update",
+          "user/change_role",
+          "user/get_by_id",
+          "supervisor_employee_relations/all_assigned_employee",
+        ];
+      } else {
+        return [
+          "user/create",
+          "user/update",
+        ];
+      }
+    },
+  },
   // users: {
-  //   type: mongoose.Schema.ObjectId, 
+  //   type: mongoose.Schema.ObjectId,
   //   ref: "users",
   // },
 });
 
-RoleSchema.methods.setPermissions = function() {
-  if (this.role_name) {
-    console.log("this.permissions")
-    this.permissions=[""];
-  }
-};
- 
 module.exports = mongoose.model("roles", RoleSchema);
