@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: mongoose.Schema.ObjectId, 
     ref: "roles",
+    required: [true, "Please enter role"]
   },
   active_status: {
     type: Boolean,
