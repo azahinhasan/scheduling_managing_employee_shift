@@ -19,6 +19,7 @@ const config = require("../config/config");
  * @returns {JSON} - if user have access then will redirect to next function else unauthorized error.
  */
 const haveAccess = async (req, res, next) => {
+ 
   const token = req.headers.authorization;
   res.locals.can_create_any_user = true;
   //will help to let know is it create request from Sign up(role=employee) or from admin want to create user.
@@ -61,7 +62,7 @@ const haveAccess = async (req, res, next) => {
       });
     }
   }
-
+  
   res.locals.requestedUser = { role: user.role.role_name, _id: user._id }; //sending some info to the controllers
   next();
 };

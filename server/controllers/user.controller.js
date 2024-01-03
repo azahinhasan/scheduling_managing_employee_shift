@@ -17,7 +17,25 @@ const Role = require("../models/role.model");
  */
 const getAllUser = async (req, res) => {
   try {
-    const list = await User.find();
+    const requestedUser = res.locals.requestedUser;
+
+    let list = [];
+    if (requestedUser.role === "administrator") {
+      //if administrator will return all user data.
+      list = await User.find({ _id: { $ne: requestedUser._id } }).populate(
+        "role"
+      );
+    } else if (requestedUser.role === "supervisor") {
+      //if supervisor will return all user/employee data who are tagged to him.
+      list = await SupervisorEmployeeRelations.findOne({
+        supervisor_id: requestedUser._id,
+      }).populate({
+        path: "assigned_employees_id",
+        populate: { path: "role",select: '-permissions' },
+      });
+      list = list.assigned_employees_id;
+    }
+
     res
       .status(200)
       .json({ success: true, message: "Data Found Successfully", data: list });
@@ -39,12 +57,12 @@ const getAllUser = async (req, res) => {
  */
 const createUser = async (req, res) => {
   try {
-    if(!req.body.role||!res.locals.can_create_any_user){
+    if (!req.body.role || !res.locals.can_create_any_user) {
       //can_create_any_user false means this create request is from Sign Up else request by Admin who adding new user
-      const role_id=await Role.findOne({ role_name: "employee" }, { _id: 1 })
-      req.body.role=role_id._id || null
+      const role_id = await Role.findOne({ role_name: "employee" }, { _id: 1 });
+      req.body.role = role_id._id || null;
     }
-   const user = await User.create(req.body);
+    const user = await User.create(req.body);
 
     res
       .status(201)
@@ -156,12 +174,10 @@ const deleteUser = async (req, res) => {
       path: "role",
     });
     if (user.role.role_name === "administrator") {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Administrator account can not be deleted",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Administrator account can not be deleted",
+      });
     }
     await User.findByIdAndDelete(req.params.user_id);
     res

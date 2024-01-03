@@ -9,6 +9,7 @@ const RoleSchema = new mongoose.Schema({
   },
   permissions: {
     type: Array,
+    //select: false,
     default: function () {
       if (this.role_name === "administrator") {
         return [
