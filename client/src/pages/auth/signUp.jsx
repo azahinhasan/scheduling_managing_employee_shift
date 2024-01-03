@@ -35,17 +35,17 @@ const SignUp = () => {
 
     await signUp(credentials).then((res) => {
       console.log(res)
-      // if (res.success) {
-      //   setMsg({
-      //     text: res.message,
-      //     color: "green",
-      //   });
-      // } else {
-      //   setMsg({
-      //     text: res.message,
-      //     color: "red",
-      //   });
-      // }
+      if (res.success) {
+        setMsg({
+          text: res.message,
+          color: "green",
+        });
+      } else {
+        setMsg({
+          text: res.message,
+          color: "red",
+        });
+      }
     });
   };
 
