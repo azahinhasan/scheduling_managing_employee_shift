@@ -29,7 +29,7 @@ const EditUserDialogBox = ({
   });
 
   const { roles } = useContext(UserContext);
- 
+
   useEffect(() => {
     setMsg({
       text: "",
@@ -48,7 +48,7 @@ const EditUserDialogBox = ({
         if (res.success) {
           getAllUser();
           handleClose();
-         // setCurrentSelectedUser("");
+          // setCurrentSelectedUser("");
         } else {
           setMsg({
             text: res.message,
@@ -56,13 +56,13 @@ const EditUserDialogBox = ({
           });
         }
       });
-    }else{
+    } else {
       createUser(currentSelectedUser).then((res) => {
         console.log(res);
         if (res.success) {
           getAllUser();
           handleClose();
-         // setCurrentSelectedUser("");
+          // setCurrentSelectedUser("");
         } else {
           setMsg({
             text: res.message,
@@ -167,7 +167,24 @@ const EditUserDialogBox = ({
                 }}
               />
             </Grid>
-
+            {isCreating && (
+              <Grid item xs={12} md={12}>
+                <TextField
+                  fullWidth
+                  required
+                  label="Password"
+                  variant="outlined"
+                  margin="normal"
+                  type="password"
+                  onChange={(e) => {
+                    setCurrentSelectedUser({
+                      ...currentSelectedUser,
+                      password: e.target.value,
+                    });
+                  }}
+                />
+              </Grid>
+            )}
             {isCreating && (
               <Grid item xs={12} md={12}>
                 <TextField

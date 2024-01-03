@@ -113,4 +113,52 @@ const updateUser = async (body, userId) => {
   }
 };
 
-export { signIn, signUp, getUserList, getAllRoles, createUser, updateUser };
+const deleteUser = async (userId) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/user/delete/` + userId,
+      {
+        method: "Delete",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const changeRole = async (userId) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/user/change_role/` + userId,
+      {
+        method: "Post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+export {
+  signIn,
+  signUp,
+  getUserList,
+  getAllRoles,
+  createUser,
+  updateUser,
+  deleteUser,
+  changeRole
+};
