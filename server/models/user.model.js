@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
   },
   hashed_password: {
     type: String,
+    required: [true, "Please enter password"],
   },
   role: {
     type: mongoose.Schema.ObjectId, 

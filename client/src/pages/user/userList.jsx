@@ -15,9 +15,9 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
-import CustomPaper from "../../components/paper/Paper";
+import CustomPaper from "../../components/paper";
 import { getUserList } from "../api-pages";
-import EditUserDialogBox from "./dialogsBoxes/editUser";
+import UserFormDialog from "./dialogsBoxes/userFormDialog";
 import ConfirmationDialog from "./dialogsBoxes/confirmationDialog";
 
 const UserList = () => {
@@ -54,15 +54,10 @@ const UserList = () => {
    
   };
 
-  // const onClickHandlerConfirmation = (type, data) => {
-  //   setOpenEditDialog(type);
-  //   setCurrentSelectedUser(data);
-  //   setIsCreating(data ? false : true);
-  // };
 
   return (
     <div>
-      <EditUserDialogBox
+      <UserFormDialog
         currentSelectedUser={currentSelectedUser}
         open={openEditDialog}
         setCurrentSelectedUser={setCurrentSelectedUser}
@@ -74,7 +69,6 @@ const UserList = () => {
       <ConfirmationDialog
         currentSelectedUser={currentSelectedUser}
         open={openConfirmationDialog}
-       // setCurrentSelectedUser={setCurrentSelectedUser}
         handleClose={handleCloseEditDialog}
         getAllUser={getAllUser}
         isRemoving={actionType==="remove"?true:false}

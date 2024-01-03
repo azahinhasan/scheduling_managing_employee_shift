@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import { createUser, updateUser } from "../../api-pages";
 import { UserContext } from "../../../context/user.context";
 
-const EditUserDialogBox = ({
+const UserFormDialog = ({
   open,
   handleClose,
   currentSelectedUser,
@@ -227,4 +227,4 @@ const EditUserDialogBox = ({
   );
 };
 
-export default EditUserDialogBox;
+export default UserFormDialog;

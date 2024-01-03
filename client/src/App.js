@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import UserContextProvider from "./context/user.context";
 import Cookies from "js-cookie";
+import Navbar from "./components/navBar";
 
 import SignIn from "./pages/auth/signIn";
 import SignUp from "./pages/auth/signUp";
@@ -17,8 +18,11 @@ import {
 function App() {
   return (
     <div className="App">
-      {" "}
       <Router>
+        {(Cookies.get("token") || !Cookies.get("token") === undefined) && (
+          <Navbar />
+        )}
+
         <UserContextProvider>
           {!Cookies.get("token") || Cookies.get("token") === undefined ? (
             <Routes>

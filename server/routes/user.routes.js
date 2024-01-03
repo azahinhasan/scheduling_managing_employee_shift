@@ -8,7 +8,7 @@ router.route("/create").post(authCheck.haveAccess, userCtrl.createUser);
 router.route("/update/:user_id").put(authCheck.haveAccess, userCtrl.updateUser);
 router
   .route("/change_role/:user_id")
-  .get(authCheck.haveAccess, userCtrl.changeUserRole);
+  .post(authCheck.haveAccess, userCtrl.changeUserRole);
 router
   .route("/get_by_id/:user_id")
   .get(authCheck.haveAccess, userCtrl.getUserByID);
