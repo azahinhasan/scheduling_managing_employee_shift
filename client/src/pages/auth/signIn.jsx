@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signIn} from "../api-pages";
+import { signIn } from "../api-pages";
 import { Paper, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -15,24 +15,24 @@ const SignIn = () => {
     color: "",
   });
 
-
   const handleSubmit = async () => {
-    await signIn().then((res) => {
-      if (res.data.signIn.status === 200) {
-        Cookies.set("token", res.data.signIn.token);
-        Cookies.set(
-          "name",
-          res.data.signIn.first_name + " " + res.data.signIn.last_name
-        );
-        navigate("/dashboard");
-        window.location.reload();
+    signIn(credentials).then((res) => {
+      console.log(res)
+      if (res.success) {
+        Cookies.set("token", res.token);
+        // Cookies.set(
+        //   "name",
+        //   res.data.first_name + " " + res.data.last_name
+        // );
+       navigate("/dashboard");
+       window.location.reload();
         setMsg({
-          text: res.data.signIn.message,
+          text: res.message,
           color: "green",
         });
       } else {
         setMsg({
-          text: res.data.signIn.message,
+          text: res.message,
           color: "red",
         });
       }

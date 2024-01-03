@@ -13,12 +13,12 @@ const signIn = async (req, res) => {
       path: "role",
     });
     console.log(user.authenticate(req.body.password));
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     if (!user.authenticate(req.body.password)) {
       return res
         .status(401)
-        .send({ error: "Email and password don't match. " });
+        .send({ message: "Email and password don't match. " });
     }
     const token = jwt.sign({ _id: user._id,role:user.role.role_name }, config.JWT_SECRET, {
       expiresIn: "1h",

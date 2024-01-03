@@ -39,8 +39,13 @@ const getAllUser = async (req, res) => {
  */
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
-    user.save();
+    if(!req.body.role||!res.locals.can_create_any_user){
+      //can_create_any_user false means this create request is from Sign Up else request by Admin who adding new user
+      const role_id=await Role.findOne({ role_name: "employee" }, { _id: 1 })
+      req.body.role=role_id._id || null
+    }
+   const user = await User.create(req.body);
+
     res
       .status(201)
       .json({ success: true, message: "User created", data: user });

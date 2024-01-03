@@ -3,6 +3,7 @@ import "./App.css";
 import UserContextProvider from "./context/user.context";
 
 import SignIn  from "./pages/auth/signIn";
+import SignUp  from "./pages/auth/signUp";
 import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
@@ -21,7 +22,7 @@ function App() {
             {!Cookies.get("token") || Cookies.get("token") === undefined ? (
               <Routes>
                 <Route path="/sign-in" element={<SignIn />} />
-                {/* <Route path="/sign-up" element={<SignUp />} /> */}
+                <Route path="/sign-up" element={<SignUp />} />
                 <Route path="*" element={<Navigate to="/sign-in" />} />
               </Routes>
             ) : (
