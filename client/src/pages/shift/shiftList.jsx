@@ -19,7 +19,7 @@ import YoutubeSearchedForIcon from "@mui/icons-material/YoutubeSearchedFor";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-
+import ConfirmationDialogShift from "./shiftDialogBoxes/confirmationDialogShift";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomPaper from "../../components/paper";
@@ -37,6 +37,8 @@ const ShiftList = () => {
     employeeName: "",
   });
   const [employees, setEmployees] = useState([]);
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+  const [currentSelectedShift, setCurrentSelectedShift] = useState({});
 
   useEffect(() => {
     getAllShiftHandler();
@@ -62,7 +64,17 @@ const ShiftList = () => {
     });
   };
 
-  const onClickHandler = (data, action) => {};
+  const onClickHandler = (data, action) => {
+    if(action==="remove"){
+      setOpenConfirmationDialog(true)
+      setCurrentSelectedShift(data);
+    }
+  };
+
+  const handleCloseDialog=()=>{
+    setOpenConfirmationDialog(false)
+    
+  }
   const filterHandler = (type) => {
     if (type === "reset") {
       setFilterInfo({
@@ -99,6 +111,14 @@ const ShiftList = () => {
   return (
     <div>
       <CustomPaper title="All Shifts">
+      <ConfirmationDialogShift
+        currentSelectedShift={currentSelectedShift}
+        open={openConfirmationDialog}
+        handleClose={handleCloseDialog}
+        getAllShiftHandler={getAllShiftHandler}
+      />
+
+
         <Grid container spacing={1}>
           <Grid item xs={6} md={3}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -222,7 +242,7 @@ const ShiftList = () => {
                         style={{ color: "#707070" }}
                       />
                     </Tooltip>
-                    <Tooltip title="DELETE" placement="bottom">
+                    <Tooltip title="DELETE" placement="right">
                       <DeleteForeverIcon
                         name=""
                         onClick={() => {

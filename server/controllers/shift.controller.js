@@ -110,10 +110,7 @@ const createShift = async (req, res) => {
  */
 const deleteShift = async (req, res) => {
   try {
-    const shift = await Shift.findByIdAndDelete(req.params.shiftId);
-    if (!shift) {
-      return res.status(404).json({ success: false, message: "No data found" });
-    }
+    const shift = await Shift.findByIdAndDelete(req.params.shift_id);
     res
       .status(200)
       .json({ success: true, message: "Shift deleted", data: shift });
