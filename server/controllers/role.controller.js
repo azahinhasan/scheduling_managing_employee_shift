@@ -15,12 +15,23 @@ const SupervisorEmployeeRelations = require("../models/supervisor_employee_relat
  * @requires ../models/role.model
  * @returns {JSON} -  if success returns the array of object as data else error.
  */
-const getAllRole= async (req, res) => {
+const getAllRole = async (req, res) => {
   try {
-    const roles = await Role.find().select('-permissions');;
-    res
-      .status(200)
-      .json({ success: true, message: "Data Found", data: roles });
+    const roles = await Role.find().select({
+      role_name: 1,
+      id: 1,
+      permissions: { 
+        //will return permission lits with roles if role matched with requested user role
+        //otherwise only role_name and _id
+        $cond: {
+          if: { $eq: ["$role_name",  res.locals.requestedUser.role] },
+          then: "$permissions",
+          else:false
+        },
+      },
+    });
+
+    res.status(200).json({ success: true, message: "Data Found", data: roles });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Something Want Wrong!" });
@@ -39,11 +50,11 @@ const getAllRole= async (req, res) => {
  */
 const createRole = async (req, res) => {
   try {
-   
-    const role = await Role.find({role_name:req.body.role_name}); 
-    console.log(role)
-    if(!role||role.length===0){
-      await Role.create({role_name:req.body.role_name}); 
+    //only role_name req from client
+    const role = await Role.find({ role_name: req.body.role_name });
+    console.log(role);
+    if (!role || role.length === 0) {
+      await Role.create({ role_name: req.body.role_name });
     }
     res
       .status(201)
@@ -55,5 +66,5 @@ const createRole = async (req, res) => {
 
 module.exports = {
   getAllRole,
-  createRole
+  createRole,
 };

@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import React,{useContext} from "react";
 import "./App.css";
 import UserContextProvider from "./context/user.context";
 import Cookies from "js-cookie";
@@ -10,6 +10,7 @@ import Dashboard from "./pages/dashboard/index";
 import UserList from "./pages/user/userList";
 import UserProfile from "./pages/user/userProfile";
 import UserGroups  from "./pages/user/userGroups";
+import { UserContext } from "./context/user.context";
 
 import {
   BrowserRouter as Router,
@@ -19,6 +20,7 @@ import {
 } from "react-router-dom";
 
 function App() {
+ // const { permissionCheck } = useContext(UserContext);
   return (
     <div className="App">
       <Router>
@@ -36,7 +38,7 @@ function App() {
           ) : (
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/users" element={<UserList />} />
+              {<Route path="/users" element={<UserList />} />}
               <Route path="/user" element={<UserProfile />} />
               <Route path="/user-groups" element={<UserGroups />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />

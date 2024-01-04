@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import CustomPaper from "../../components/paper";
 import UserGroupDialog from "./dialogsBoxes/userGroupDialog";
 import { tagToSupervisor, getAllGroups, getUserList } from "../api-pages";
@@ -16,6 +16,7 @@ import {
   Tooltip,
   Grid,
 } from "@mui/material";
+import { UserContext } from "../../context/user.context";
 
 const UserGroups = () => {
   const [groupData, setGroupData] = useState([]);
@@ -23,7 +24,7 @@ const UserGroups = () => {
     supervisors: [],
     employees: [],
   });
-
+  const { permissionCheck } = useContext(UserContext);
 
   useEffect(() => {
     getAllGroupsHandler();
@@ -80,7 +81,7 @@ const UserGroups = () => {
           users={users}
         />
 
-        <Grid container spacing={1}>
+        {permissionCheck('supervisor_employee_relations/tag_employee_to_supervisor')&&<Grid container spacing={1}>
           <Grid item xs={12} md={10} style={{ textAlign: "left" }}>
             {/* <h2>All Users</h2> */}
           </Grid>
@@ -95,7 +96,7 @@ const UserGroups = () => {
               Modify Tag
             </Button>
           </Grid>
-        </Grid>
+        </Grid>}
 
         {groupData?.map((group) => {
           return (

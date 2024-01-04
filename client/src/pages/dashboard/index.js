@@ -1,12 +1,12 @@
-import React from "react";
-import { Grid, Button } from "@mui/material";
+import React,{useContext} from "react";
+import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomPaper from "../../components/paper";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { FaList } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { GrGroup } from "react-icons/gr";
+import { UserContext } from "../../context/user.context";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,12 +17,13 @@ const Dashboard = () => {
     margin: "5px",
     cursor: "pointer",
   }
+  const { permissionCheck } = useContext(UserContext);
   return (
     <div>
       <h1>Dashboard</h1>
       <CustomPaper>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          {permissionCheck('user/get_all')&&<Grid item xs={12} md={4}>
             <div
               style={style}
               onClick={() => navigate("/users")}
@@ -31,7 +32,7 @@ const Dashboard = () => {
               <br />
               All Users
             </div>
-          </Grid>
+          </Grid>}
           <Grid item xs={12} md={4}>
             <div
               style={style}
