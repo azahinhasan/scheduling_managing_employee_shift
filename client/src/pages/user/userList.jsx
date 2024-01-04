@@ -95,14 +95,15 @@ const UserList = () => {
             </Button>
           </Grid>
         </Grid>
+        
         <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
-                <TableCell>Options</TableCell>
+              <TableRow >
+                <TableCell><b>Name</b></TableCell>
+                <TableCell><b>Email</b></TableCell>
+                <TableCell><b>Role</b></TableCell>
+                <TableCell><b>Options</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,7 +111,7 @@ const UserList = () => {
                 <TableRow key={row.id}>
                   <TableCell>{row.full_name}</TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.role.role_name}</TableCell>
+                  <TableCell>{row?.role?.role_name}</TableCell>
                   <TableCell>
                     <Tooltip title="EDIT" placement="left">
                       <EditIcon

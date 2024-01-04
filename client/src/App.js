@@ -8,6 +8,9 @@ import SignIn from "./pages/auth/signIn";
 import SignUp from "./pages/auth/signUp";
 import Dashboard from "./pages/dashboard/index";
 import UserList from "./pages/user/userList";
+import UserProfile from "./pages/user/userProfile";
+import UserGroups  from "./pages/user/userGroups";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,6 +37,8 @@ function App() {
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/users" element={<UserList />} />
+              <Route path="/user" element={<UserProfile />} />
+              <Route path="/user-groups" element={<UserGroups />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />
             </Routes>
           )}

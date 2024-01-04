@@ -189,7 +189,7 @@ const getAllGroups= async () => {
   }
 };
 
-const tagToSupervisor= async () => {
+const tagToSupervisor= async body => {
   try {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/tag_employee_to_supervisor`,
@@ -199,7 +199,8 @@ const tagToSupervisor= async () => {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: Cookies.get("token"),
-        }
+        },
+        body: JSON.stringify(body),
       }
     );
     return await response.json();

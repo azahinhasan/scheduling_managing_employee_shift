@@ -70,18 +70,6 @@ const ConfirmationDialog = ({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      {/* <IconButton
-        aria-label="close"
-        onClick={handleClose}
-        sx={{
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: (theme) => theme.palette.grey[500],
-        }}
-      >
-        X
-      </IconButton> */}
       <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
         {isRemoving
           ? "Do you want ot remove this user?"
@@ -90,9 +78,9 @@ const ConfirmationDialog = ({
       <DialogContent>
         {isRemoving
           ? "Warning: This user data will be not retrieve again!"
-          : "User current role is " + currentSelectedUser?.role?.role_name}
-
-        
+          : "Note: User current role is " +
+            currentSelectedUser?.role?.role_name +
+            "."}
 
         <br />
         <br />

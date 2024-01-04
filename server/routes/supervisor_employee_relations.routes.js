@@ -4,11 +4,11 @@ const authCheck = require("../middleware/auth_check");
 const router = express.Router();
 
 router
-  .route("/all_assigned_employee/:supervisor_id")
-  .get(supervisorEmployeeRelationCtrl.getEmployeeBySupervisorID);
+  .route("/all_assigned_employee")
+  .get(authCheck.haveAccess,supervisorEmployeeRelationCtrl.getEmployeeBySupervisorID);
 
 router
   .route("/tag_employee_to_supervisor")
-  .put(supervisorEmployeeRelationCtrl.tagEmployeeToSupervisor);
+  .put(authCheck.haveAccess,supervisorEmployeeRelationCtrl.tagEmployeeToSupervisor);
 
 module.exports = router;

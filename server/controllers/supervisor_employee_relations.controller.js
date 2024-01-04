@@ -16,36 +16,35 @@ const supervisor_employee_relations = require("../models/supervisor_employee_rel
  */
 const tagEmployeeToSupervisor = async (req, res) => {
   try {
-    if (req.body.previous_supervisor_id) {
-      //removing employee from previous supervisor
-      await supervisor_employee_relations.findOneAndUpdate(
-        { supervisor_id: req.body.previous_supervisor_id },
-        { $pull: { assigned_employees_id: req.body.employee_id } }
-      );
-    }
 
     const existingSupervisor = await supervisor_employee_relations.findOne({
       supervisor_id: req.body.supervisor_id,
     }); //checking is supervisor_id exist or not into the supervisor_employee_relations collection
 
+    if (existingSupervisor?.assigned_employees_id.includes(req.body.employee_id)) {
+      //checking is employee_id already exist or not under requested supervisor.
+      return res.status(400).json({
+        success: false,
+        message: "Employee already exist under this supervisor",
+      });
+    }
+
+  
+    await supervisor_employee_relations.findOneAndUpdate(
+      //removing employee from their previous supervisor.
+      {
+        assigned_employees_id: req.body.employee_id,
+      },
+      {
+        $pull: { assigned_employees_id: req.body.employee_id },
+      }
+    );
     if (existingSupervisor) {
       //if exist then will add new employee_id in there.
-      if (
-        !existingSupervisor.assigned_employees_id.includes(req.body.employee_id)
-      ) {
-        //checking is employee_id already exist or not.
-        await supervisor_employee_relations.findOneAndUpdate(
-          { supervisor_id: req.body.supervisor_id },
-          { $push: { assigned_employees_id: req.body.employee_id } }
-        );
-      } else {
-        return res
-          .status(400)
-          .json({
-            success: true,
-            message: "Employee already exist under this supervisor",
-          });
-      }
+      await supervisor_employee_relations.findOneAndUpdate(
+        { supervisor_id: req.body.supervisor_id },
+        { $push: { assigned_employees_id: req.body.employee_id } }
+      );
     } else {
       //if not exist will create new supervisor_employee_relations data with supervisor_id and employee_id.
       await supervisor_employee_relations.create({
@@ -54,7 +53,7 @@ const tagEmployeeToSupervisor = async (req, res) => {
       });
     }
 
-    res.status(200).json({ success: true, message: "Updated" });
+    res.status(200).json({ success: true, message: "Employee successfully tagged" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -65,7 +64,7 @@ const tagEmployeeToSupervisor = async (req, res) => {
  * @memberof SupervisorEmployeeController
  * @async
  * @method
- * @description Get Employee data by or based on given supervisor ID 
+ * @description Get Employee data by or based on given supervisor ID
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @requires ../models/user.model
@@ -73,21 +72,29 @@ const tagEmployeeToSupervisor = async (req, res) => {
  */
 const getEmployeeBySupervisorID = async (req, res) => {
   try {
-    
+    let filterWithID = {};
+
+    //requestedUser coming from middleware.
+    if (res.locals.requestedUser.role === "administrator") {
+      filterWithID = {};
+    } else if (res.locals.requestedUser.role === "supervisor") {
+      filterWithID = {
+        supervisor_id: res.locals.requestedUser._id,
+      };
+    }
+    //if role is supervisor will return only his group.
+    //and if  administrator will return all groups.
+
     const data = await supervisor_employee_relations
-      .find({
-        supervisor_id: req.params.supervisor_id.toString(),
-      })
+      .find(filterWithID)
       .populate({
-        path: "assigned_employees_id",
+        path: "assigned_employees_id supervisor_id",
       });
 
     if (!data) {
       return res.status(404).json({ success: false, message: "No data found" });
     }
-    res
-      .status(200)
-      .json({ success: true, message: "Data Found", data });
+    res.status(200).json({ success: true, message: "Data Found", data });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Something Want Wrong!" });

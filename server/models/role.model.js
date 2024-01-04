@@ -5,6 +5,7 @@ const RoleSchema = new mongoose.Schema({
   role_name: {
     type: String,
     required: [true, "Please enter name "],
+    unique: true,
     enum: ["administrator", "supervisor", "employee"],
   },
   permissions: {
@@ -33,7 +34,6 @@ const RoleSchema = new mongoose.Schema({
       } else if (this.role_name === "supervisor") {
         return [
           "user/update",
-          "user/change_role",
           "user/get_by_id",
           "supervisor_employee_relations/all_assigned_employee",
         ];
