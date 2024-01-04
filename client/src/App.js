@@ -10,6 +10,7 @@ import Dashboard from "./pages/dashboard/index";
 import UserList from "./pages/user/userList";
 import UserProfile from "./pages/user/userProfile";
 import UserGroups  from "./pages/user/userGroups";
+import ShiftList from "./pages/shift/shiftList";
 import { UserContext } from "./context/user.context";
 
 import {
@@ -41,6 +42,7 @@ function App() {
               {<Route path="/users" element={<UserList />} />}
               <Route path="/user" element={<UserProfile />} />
               <Route path="/user-groups" element={<UserGroups />} />
+              <Route path="/shifts" element={<ShiftList />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />
             </Routes>
           )}

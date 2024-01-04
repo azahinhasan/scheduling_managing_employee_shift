@@ -42,7 +42,7 @@ const getAllRoles = async () => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/role/get_all`,
       {
-        method: "Get",
+        method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const getUserList = async () => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/user/get_all`,
       {
-        method: "Get",
+        method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const updateUser = async (body, userId) => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/user/update/` + userId,
       {
-        method: "Put",
+        method: "PUT",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ const deleteUser = async (userId) => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/user/delete/` + userId,
       {
-        method: "Delete",
+        method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const changeRole = async (userId) => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/user/change_role/` + userId,
       {
-        method: "Post",
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -156,7 +156,7 @@ const getUserInfoById= async (userId) => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/user/get_by_id`,
       {
-        method: "Get",
+        method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -175,7 +175,7 @@ const getAllGroups= async () => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/all_assigned_employee`,
       {
-        method: "Get",
+        method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -194,7 +194,7 @@ const tagToSupervisor= async body => {
     let response = await fetch(
       process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/tag_employee_to_supervisor`,
       {
-        method: "Put",
+        method: "PUT",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -209,6 +209,83 @@ const tagToSupervisor= async body => {
   }
 };
 
+const getAllShift = async () => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/shift/get_all`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const createShift = async (body) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/shift/create`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteShift = async (id) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/shift/delete/`+id,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const updateShift = async (body,id) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/shift/update`+id,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export {
   signIn,
@@ -221,5 +298,9 @@ export {
   changeRole,
   getUserInfoById,
   getAllGroups,
-  tagToSupervisor
+  tagToSupervisor,
+  createShift,
+  deleteShift,
+  updateShift,
+  getAllShift
 };

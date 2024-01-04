@@ -7,6 +7,7 @@ const ShiftSchema = new mongoose.Schema({
   },
   label_color: {
     type: String,
+    default:"white"
   },
   date: {
     type: Date,

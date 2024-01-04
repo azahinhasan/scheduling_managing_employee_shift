@@ -18,9 +18,18 @@ const jwt = require("jsonwebtoken");
  */
 const getAllShift = async (req, res) => {
   try {
-    const list = await Shift.find().populate({
+    const list = await Shift.find({}).populate({
       path: "assigned_employee",
     });
+
+    // if(){
+
+    // }else{
+
+    // }
+    // await Shift.findById(req.params.shiftId).populate({
+    //   path: "assigned_employee",
+    // });
 
     res
       .status(200)
@@ -46,6 +55,8 @@ const getShiftByID = async (req, res) => {
     const shift = await Shift.findById(req.params.shiftId).populate({
       path: "assigned_employee",
     });
+    
+    
 
     if (!shift) {
       return res.status(404).json({ success: false, message: "No data found" });

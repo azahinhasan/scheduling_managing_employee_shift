@@ -12,6 +12,7 @@ import {
   Tooltip,
   Grid,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
@@ -33,30 +34,25 @@ const UserList = () => {
   const getAllUser = () => {
     getUserList().then((res) => {
       console.log(res);
-      if(res.success){
-          res.data?.length>0&&setRows(res.data);
+      if (res.success) {
+        res.data?.length > 0 && setRows(res.data);
       }
-     
     });
   };
 
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false);
-    setOpenConfirmationDialog(false)
+    setOpenConfirmationDialog(false);
   };
-  const onClickHandler = ( data,action) => {
-    if(["add","edit"].includes(action)){
+  const onClickHandler = (data, action) => {
+    if (["add", "edit"].includes(action)) {
       setOpenEditDialog(true);
-     
-    }else{
-      setOpenConfirmationDialog(true)
-
+    } else {
+      setOpenConfirmationDialog(true);
     }
     setActionType(action);
     setCurrentSelectedUser(data);
-   
   };
-
 
   return (
     <div>
@@ -66,7 +62,7 @@ const UserList = () => {
         setCurrentSelectedUser={setCurrentSelectedUser}
         handleClose={handleCloseEditDialog}
         getAllUser={getAllUser}
-        isCreating={actionType==="add"?true:false}
+        isCreating={actionType === "add" ? true : false}
       />
 
       <ConfirmationDialog
@@ -74,36 +70,44 @@ const UserList = () => {
         open={openConfirmationDialog}
         handleClose={handleCloseEditDialog}
         getAllUser={getAllUser}
-        isRemoving={actionType==="remove"?true:false}
+        isRemoving={actionType === "remove" ? true : false}
       />
 
       <CustomPaper title="All Users">
         {" "}
         <Grid container spacing={1}>
-          <Grid item xs={12} md={8} style={{ textAlign: "left" }}>
+          <Grid item xs={12} md={11} style={{ textAlign: "left" }}>
             {/* <h2>All Users</h2> */}
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={1}>
             <Button
+              style={{ height: "55px" }}
+              fullWidth
               onClick={() => {
-                onClickHandler("","add");
+                onClickHandler("", "add");
               }}
               variant="contained"
-              style={{ width: "100%", display: "block" }}
             >
-              +Add New User
+              <AddIcon />
             </Button>
           </Grid>
         </Grid>
-        
         <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
-              <TableRow >
-                <TableCell><b>Name</b></TableCell>
-                <TableCell><b>Email</b></TableCell>
-                <TableCell><b>Role</b></TableCell>
-                <TableCell><b>Options</b></TableCell>
+              <TableRow>
+                <TableCell>
+                  <b>Name</b>
+                </TableCell>
+                <TableCell>
+                  <b>Email</b>
+                </TableCell>
+                <TableCell>
+                  <b>Role</b>
+                </TableCell>
+                <TableCell>
+                  <b>Options</b>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -116,7 +120,7 @@ const UserList = () => {
                     <Tooltip title="EDIT" placement="left">
                       <EditIcon
                         onClick={() => {
-                          onClickHandler( row,"edit");
+                          onClickHandler(row, "edit");
                         }}
                         name=""
                         style={{ color: "#707070" }}
@@ -126,7 +130,7 @@ const UserList = () => {
                       <DeleteForeverIcon
                         name=""
                         onClick={() => {
-                          onClickHandler( row,"remove");
+                          onClickHandler(row, "remove");
                         }}
                         style={{ color: "#707070" }}
                       />
@@ -135,7 +139,7 @@ const UserList = () => {
                       <SwitchRightIcon
                         name=""
                         onClick={() => {
-                          onClickHandler( row,"switchRole");
+                          onClickHandler(row, "switchRole");
                         }}
                         style={{ color: "#707070" }}
                       />

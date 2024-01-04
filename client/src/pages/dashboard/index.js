@@ -46,7 +46,7 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <div
               style={style}
-              onClick={() => navigate("/users")}
+              onClick={() => navigate("/shifts")}
             >
               <FaClockRotateLeft style={{ fontSize: "80px" }} />
               <br />

@@ -1,11 +1,9 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CustomPaper from "../../components/paper";
 import UserGroupDialog from "./dialogsBoxes/userGroupDialog";
 import { tagToSupervisor, getAllGroups, getUserList } from "../api-pages";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
 import {
-  Paper,
-  TextField,
   Button,
   Table,
   TableBody,
@@ -43,16 +41,16 @@ const UserGroups = () => {
     });
   }, []);
 
-  useEffect(() => { }, [groupData]);
+  useEffect(() => {}, [groupData]);
 
-  const getAllGroupsHandler=()=>{
+  const getAllGroupsHandler = () => {
     getAllGroups().then((res) => {
       console.log(res);
       if (res.success) {
         setGroupData(res.data);
       }
     });
-  }
+  };
 
   const [openDialog, setOpenDialog] = useState(false);
   const [isTagging, setIsTagging] = useState(false);
@@ -66,7 +64,7 @@ const UserGroups = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    getAllGroups()
+    getAllGroups();
   };
 
   return (
@@ -81,29 +79,34 @@ const UserGroups = () => {
           users={users}
         />
 
-        {permissionCheck('supervisor_employee_relations/tag_employee_to_supervisor')&&<Grid container spacing={1}>
-          <Grid item xs={12} md={10} style={{ textAlign: "left" }}>
-            {/* <h2>All Users</h2> */}
+        {permissionCheck(
+          "supervisor_employee_relations/tag_employee_to_supervisor"
+        ) && (
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={9} style={{ textAlign: "left" }}>
+              {/* <h2>All Users</h2> */}
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Button
+                fullWidth
+                onClick={() => {
+                  onClickHandler("", true);
+                }}
+                variant="contained"
+                style={{ height: "55px" }}
+              >
+                Employee Tag
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={2}>
-            <Button
-              onClick={() => {
-                onClickHandler("", true);
-              }}
-              variant="contained"
-              style={{ width: "100%", display: "block" }}
-            >
-              Modify Tag
-            </Button>
-          </Grid>
-        </Grid>}
+        )}
 
         {groupData?.map((group) => {
           return (
             <div
               style={{
-                border: "1px solid grey",
-                margin: "4px 2px",
+                border: "2px solid grey",
+                margin: "7px 2px",
                 padding: "5px",
                 borderRadius: "10px",
               }}
