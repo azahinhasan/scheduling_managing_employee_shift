@@ -31,7 +31,7 @@ const getAllUser = async (req, res) => {
         supervisor_id: requestedUser._id,
       }).populate({
         path: "assigned_employees_id",
-        populate: { path: "role",select: '-permissions' },
+        populate: { path: "role", select: "-permissions" },
       });
       list = list.assigned_employees_id;
     }
@@ -76,7 +76,7 @@ const createUser = async (req, res) => {
  * @memberof UserController
  * @async
  * @method
- * @description .
+ * @description Get all data by ID. This ID coming form Token.
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @requires ../models/user.model
@@ -84,7 +84,10 @@ const createUser = async (req, res) => {
  */
 const getUserByID = async (req, res) => {
   try {
-    const user = await User.findById(req.params.user_id);
+    const user = await User.findById(res.locals.requestedUser._id).populate({
+      path: "role",
+      select: "-permissions",
+    });
 
     if (!user) {
       return res.status(404).json({ success: false, message: "No data found" });
@@ -150,7 +153,7 @@ const updateUser = async (req, res) => {
         ));
     }
 
-    res.status(200).json({ success: true, message: "User updated" });
+    res.status(200).json({ success: true, message: "User info updated" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -173,7 +176,7 @@ const deleteUser = async (req, res) => {
     const user = await User.findById(req.params.user_id).populate({
       path: "role",
     });
-    if (user.role.role_name === "administrator") {
+    if (user.role && user.role.role_name === "administrator") {
       return res.status(400).json({
         success: false,
         message: "Administrator account can not be deleted",

@@ -151,6 +151,63 @@ const changeRole = async (userId) => {
   }
 };
 
+const getUserInfoById= async (userId) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/user/get_by_id`,
+      {
+        method: "Get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getAllGroups= async () => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/all_assigned_employee`,
+      {
+        method: "Get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const tagToSupervisor= async () => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/tag_employee_to_supervisor`,
+      {
+        method: "Put",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        }
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 export {
   signIn,
@@ -160,5 +217,8 @@ export {
   createUser,
   updateUser,
   deleteUser,
-  changeRole
+  changeRole,
+  getUserInfoById,
+  getAllGroups,
+  tagToSupervisor
 };

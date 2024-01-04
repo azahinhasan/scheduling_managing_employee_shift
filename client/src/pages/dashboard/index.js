@@ -20,7 +20,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <CustomPaper style={{ justifyContent: "center", alignItems: "center" }}>
+      <CustomPaper>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <div
@@ -35,11 +35,11 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <div
               style={style}
-              onClick={() => navigate("/users")}
+              onClick={() => navigate("/user-groups")}
             >
               <GrGroup style={{ fontSize: "80px" }} />
               <br />
-              Group Manage
+              User Groups
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -55,7 +55,7 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <div
               style={style}
-              onClick={() => navigate("/users")}
+              onClick={() => navigate("/user")}
             >
               <CgProfile style={{ fontSize: "80px" }} />
               <br />
