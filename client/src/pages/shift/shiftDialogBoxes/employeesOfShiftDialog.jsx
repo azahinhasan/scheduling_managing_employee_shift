@@ -54,12 +54,13 @@ const EmployeesOfShiftDialog = ({
   console.log(currentSelectedShift, "currentSelectedShift");
   const [employeeShifts, setEmployeeShifts] = useState([]);
 
-  const deleteHandler = async () => {
+  useEffect(()=>{},[shifts])
+
+  const deleteHandler = async (id) => {
     //current_shift_id,new_shift_id,employee_id,action_type
 
     console.log(currentSelectedShift);
-    const { _id, ...otherInfo } = currentSelectedShift;
-    modifyEmployeeShift(_id).then((res) => {
+    modifyEmployeeShift({current_shift_id:currentSelectedShift._id,employee_id:id,action_type:"remove"}).then((res) => {
       console.log(res);
       if (res.success) {
         getAllShiftHandler();
@@ -135,9 +136,9 @@ const EmployeesOfShiftDialog = ({
                           <Tooltip title="DELETE" placement="left">
                             <DeleteForeverIcon
                               name=""
-                              // onClick={() => {
-                              //   onClickHandler(row, "remove");
-                              // }}
+                              onClick={() => {
+                                deleteHandler(row._id);
+                              }}
                               style={{ color: "red" }}
                             />
                           </Tooltip>

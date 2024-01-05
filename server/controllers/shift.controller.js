@@ -160,6 +160,8 @@ const updateShift = async (req, res) => {
 const modifyShiftOfEmployee = async (req, res) => {
   try {
     //current_shift_id,new_shift_id,employee_id,action_type
+    console.log(req.body)
+    // return;
 
     if (!req.body.employee_id||!req.body.action_type) {
       return  res.status(400).json({ success: false, message: "Missing action type or employee id" });

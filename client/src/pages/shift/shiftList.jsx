@@ -24,6 +24,7 @@ import EmployeesOfShiftDialog from "./shiftDialogBoxes/employeesOfShiftDialog";
 import ShiftFormDialog from "./shiftDialogBoxes/shiftFormDialog";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import GroupsIcon from '@mui/icons-material/Groups';
 import CustomPaper from "../../components/paper";
 import { getAllShift, getUserList } from "../api-pages";
 
@@ -251,9 +252,6 @@ const ShiftList = () => {
                   <b>End Time</b>
                 </TableCell>
                 <TableCell>
-                  <b>Employees</b>
-                </TableCell>
-                <TableCell>
                   <b>Options</b>
                 </TableCell>
               </TableRow>
@@ -279,45 +277,33 @@ const ShiftList = () => {
                     {row.end_time}
                   </TableCell>
                   <TableCell>
-                    {" "}
-                    <Tooltip title="DELETE" placement="right">
-                      <DeleteForeverIcon
-                        name=""
-                        onClick={() => {
-                          onClickHandler(row, "employees");
-                        }}
-                        style={{ color: "#707070" }}
-                      />
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
                     <Tooltip title="EDIT" placement="left">
                       <EditIcon
                         onClick={() => {
                           onClickHandler(row, "edit");
                         }}
                         name=""
-                        style={{ color: "#707070" }}
+                        style={{ color: "blue" }}
                       />
                     </Tooltip>
                     <Tooltip title="DELETE" placement="right">
                       <DeleteForeverIcon
                         name=""
                         onClick={() => {
-                          onClickHandler(row, "remove");
+                          onClickHandler(row, "bottom");
                         }}
-                        style={{ color: "#707070" }}
+                        style={{ color: "red" }}
                       />
                     </Tooltip>
-                    {/* <Tooltip title="SWITCH ROLE" placement="right">
-                      <SwitchRightIcon
+                    <Tooltip title="Employees" placement="right">
+                      <GroupsIcon
                         name=""
                         onClick={() => {
-                          onClickHandler(row, "switchRole");
+                          onClickHandler(row, "employees");
                         }}
-                        style={{ color: "#707070" }}
+                       
                       />
-                    </Tooltip> */}
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))}
