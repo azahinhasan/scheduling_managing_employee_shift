@@ -270,7 +270,7 @@ const deleteShift = async (id) => {
 const updateShift = async (body,id) => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/shift/update`+id,
+      process.env.REACT_APP_PROXY + `/api/shift/update/`+id,
       {
         method: "PUT",
         headers: {

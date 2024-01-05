@@ -20,12 +20,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import ConfirmationDialogShift from "./shiftDialogBoxes/confirmationDialogShift";
+import ShiftFormDialog from "./shiftDialogBoxes/shiftFormDialog";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CustomPaper from "../../components/paper";
 import { getAllShift, getUserList } from "../api-pages";
-// import UserFormDialog from "./dialogsBoxes/userFormDialog";
-// import ConfirmationDialog from "./dialogsBoxes/confirmationDialog";
 
 const ShiftList = () => {
   const [rows, setRows] = useState([]);
@@ -38,6 +37,8 @@ const ShiftList = () => {
   });
   const [employees, setEmployees] = useState([]);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+  const [openFormDialog, setOpenFormDialog] = useState(false);
+
   const [currentSelectedShift, setCurrentSelectedShift] = useState({});
 
   useEffect(() => {
@@ -65,16 +66,21 @@ const ShiftList = () => {
   };
 
   const onClickHandler = (data, action) => {
-    if(action==="remove"){
-      setOpenConfirmationDialog(true)
-      setCurrentSelectedShift(data);
+    setCurrentSelectedShift(data);
+    setActionType(action);
+    if (action === "remove") {
+      setOpenConfirmationDialog(true);
+      setOpenFormDialog(false);
+    } else if (["create", "edit"].includes(action)) {
+      setOpenFormDialog(true);
+      setOpenConfirmationDialog(false);
     }
   };
 
-  const handleCloseDialog=()=>{
-    setOpenConfirmationDialog(false)
-    
-  }
+  const handleCloseDialog = () => {
+    setOpenConfirmationDialog(false);
+    setOpenFormDialog(false);
+  };
   const filterHandler = (type) => {
     if (type === "reset") {
       setFilterInfo({
@@ -99,25 +105,33 @@ const ShiftList = () => {
     setFilteredRows(filteredData);
   };
 
-  const convertTo12HourFormat=(time24)=> {
-    if(!time24) return "none"
-    const [hours24, minutes] = time24.split(':');
-    const hours12 = ((parseInt(hours24) + 11) % 12 + 1);
-    const ampm = parseInt(hours24) >= 12 ? 'PM' : 'AM';
+  const convertTo12HourFormat = (time24) => {
+    if (!time24) return "none";
+    const [hours24, minutes] = time24.split(":");
+    const hours12 = ((parseInt(hours24) + 11) % 12) + 1;
+    const ampm = parseInt(hours24) >= 12 ? "PM" : "AM";
 
     return `${hours12}:${minutes} ${ampm}`;
-}
+  };
 
   return (
     <div>
       <CustomPaper title="All Shifts">
-      <ConfirmationDialogShift
-        currentSelectedShift={currentSelectedShift}
-        open={openConfirmationDialog}
-        handleClose={handleCloseDialog}
-        getAllShiftHandler={getAllShiftHandler}
-      />
+        <ConfirmationDialogShift
+          currentSelectedShift={currentSelectedShift}
+          open={openConfirmationDialog}
+          handleClose={handleCloseDialog}
+          getAllShiftHandler={getAllShiftHandler}
+        />
 
+        <ShiftFormDialog
+          currentSelectedShift={currentSelectedShift}
+          open={openFormDialog}
+          handleClose={handleCloseDialog}
+          getAllShiftHandler={getAllShiftHandler}
+          isCreating={actionType === "create" ? true : false}
+          setCurrentSelectedShift={setCurrentSelectedShift}
+        />
 
         <Grid container spacing={1}>
           <Grid item xs={6} md={3}>
@@ -188,7 +202,17 @@ const ShiftList = () => {
               style={{ height: "55px" }}
               fullWidth
               onClick={() => {
-                onClickHandler("", "add");
+                onClickHandler(
+                  {
+                    end_time: "12:00 PM",
+                    start_time: "12:00 PM",
+                    date: new Date().setUTCHours(0, 0, 0, 0),
+                    label_color: "",
+                    label: "",
+                    assigned_employee: [],
+                  },
+                  "create"
+                );
               }}
               variant="contained"
             >
@@ -200,6 +224,9 @@ const ShiftList = () => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell>
+                  <b>Label</b>
+                </TableCell>
                 <TableCell>
                   <b>Date</b>
                 </TableCell>
@@ -220,18 +247,21 @@ const ShiftList = () => {
             <TableBody>
               {filteredRows.map((row) => (
                 <TableRow key={row.id}>
+                  <TableCell
+                    style={{ maxWidth: "70px", backgroundColor: row.label_color||"white"}}
+                  >
+                    {row.label || "noe"}
+                  </TableCell>
                   <TableCell style={{ maxWidth: "70px" }}>
                     {new Date(row.date).toDateString() || "None"}
                   </TableCell>
                   <TableCell style={{ maxWidth: "70px" }}>
-                    {(row.start_time)}
+                    {row.start_time}
                   </TableCell>
                   <TableCell style={{ maxWidth: "70px" }}>
-                    {(row.end_time)}
+                    {row.end_time}
                   </TableCell>
-                  <TableCell>
-                    List
-                  </TableCell>
+                  <TableCell>List</TableCell>
                   <TableCell>
                     <Tooltip title="EDIT" placement="left">
                       <EditIcon

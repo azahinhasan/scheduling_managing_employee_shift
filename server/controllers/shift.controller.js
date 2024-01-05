@@ -27,7 +27,7 @@ const getAllShift = async (req, res) => {
     // }else{
 
     // }
-    // await Shift.findById(req.params.shiftId).populate({
+    // await Shift.findById(req.params.shift_id).populate({
     //   path: "assigned_employee",
     // });
 
@@ -52,7 +52,7 @@ const getAllShift = async (req, res) => {
  */
 const getShiftByID = async (req, res) => {
   try {
-    const shift = await Shift.findById(req.params.shiftId).populate({
+    const shift = await Shift.findById(req.params.shift_id).populate({
       path: "assigned_employee",
     });
     
@@ -132,15 +132,13 @@ const deleteShift = async (req, res) => {
 const updateShift = async (req, res) => {
   try {
 
-    const sameShiftExist = await Shift.findOne({ date: req.body.date, start_time: req.body.start_time, end_time: req.body.end_time });
+    const sameShiftExist = await Shift.findOne({ date: req.body.date, start_time: req.body.start_time, end_time: req.body.end_time,_id: { $ne: req.params.shift_id } });
     if(sameShiftExist){
       return res.status(400).json({ success: false, message: "Same Type Shift Already Exist!" });
     }
     
-    const shift = await Shift.findByIdAndUpdate(req.params.shiftId, req.body);
-    if (!shift) {
-      return res.status(404).json({ success: false, message: "No data found" });
-    }
+    const shift = await Shift.findByIdAndUpdate(req.params.shift_id, req.body);
+    
     res
       .status(200)
       .json({ success: true, message: "Shift updated", data: shift });
