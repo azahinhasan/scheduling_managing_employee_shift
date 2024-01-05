@@ -46,7 +46,6 @@ const haveAccess = async (req, res, next) => {
 
     if (!user || !user.role.permissions.includes(requestedRoute)) {
       //checking do user have the permission for their requested API
-
       if (requestedRoute === "user/create") {
         //this flag will tell controller this is a sign up req who is not a user of system.
         res.locals.can_create_any_user = false;

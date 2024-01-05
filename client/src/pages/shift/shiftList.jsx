@@ -250,7 +250,7 @@ const ShiftList = () => {
             </TableHead>
             <TableBody>
               {filteredRows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row._id}>
                   <TableCell
                     style={{
                       maxWidth: "70px",
@@ -278,11 +278,11 @@ const ShiftList = () => {
                         style={{ color: "blue" }}
                       />
                     </Tooltip>
-                    <Tooltip title="DELETE" placement="right">
+                    <Tooltip title="DELETE" placement="bottom">
                       <DeleteForeverIcon
                         name=""
                         onClick={() => {
-                          onClickHandler(row, "bottom");
+                          onClickHandler(row, "remove");
                         }}
                         style={{ color: "red" }}
                       />

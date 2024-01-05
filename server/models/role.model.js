@@ -35,12 +35,15 @@ const RoleSchema = new mongoose.Schema({
         return [
           "user/update",
           "user/get_by_id",
+          "shift/get_all",
+          "shift/modify_employees_shift",
           "supervisor_employee_relations/all_assigned_employee",
         ];
       } else {
         return [
           "user/create",
           "user/update",
+          "shift/get_all"
         ];
       }
     },

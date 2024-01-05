@@ -1,4 +1,4 @@
-const supervisor_employee_relations = require("../models/supervisor_employee_relations.model");
+const SupervisorEmployeeRelation = require("../models/supervisor_employee_relations.model");
 
 /**
  * @namespace SupervisorEmployeeController
@@ -11,15 +11,15 @@ const supervisor_employee_relations = require("../models/supervisor_employee_rel
  * @description Assign or tag one Employee to under specific Supervisor
  * @param {object} req - request object.
  * @param {object} res - response object.
- * @requires ../models/supervisor_employee_relations.model
+ * @requires ../models/SupervisorEmployeeRelation.model
  * @returns {JSON} - if success returns the object as data else error.
  */
 const tagEmployeeToSupervisor = async (req, res) => {
   try {
 
-    const existingSupervisor = await supervisor_employee_relations.findOne({
+    const existingSupervisor = await SupervisorEmployeeRelation.findOne({
       supervisor_id: req.body.supervisor_id,
-    }); //checking is supervisor_id exist or not into the supervisor_employee_relations collection
+    }); //checking is supervisor_id exist or not into the SupervisorEmployeeRelation collection
 
     if (existingSupervisor?.assigned_employees_id.includes(req.body.employee_id)) {
       //checking is employee_id already exist or not under requested supervisor.
@@ -30,7 +30,7 @@ const tagEmployeeToSupervisor = async (req, res) => {
     }
 
   
-    await supervisor_employee_relations.findOneAndUpdate(
+    await SupervisorEmployeeRelation.findOneAndUpdate(
       //removing employee from their previous supervisor.
       {
         assigned_employees_id: req.body.employee_id,
@@ -41,13 +41,13 @@ const tagEmployeeToSupervisor = async (req, res) => {
     );
     if (existingSupervisor) {
       //if exist then will add new employee_id in there.
-      await supervisor_employee_relations.findOneAndUpdate(
+      await SupervisorEmployeeRelation.findOneAndUpdate(
         { supervisor_id: req.body.supervisor_id },
         { $push: { assigned_employees_id: req.body.employee_id } }
       );
     } else {
-      //if not exist will create new supervisor_employee_relations data with supervisor_id and employee_id.
-      await supervisor_employee_relations.create({
+      //if not exist will create new SupervisorEmployeeRelation data with supervisor_id and employee_id.
+      await SupervisorEmployeeRelation.create({
         supervisor_id: req.body.supervisor_id,
         assigned_employees_id: [req.body.employee_id],
       });
@@ -85,7 +85,7 @@ const getEmployeeBySupervisorID = async (req, res) => {
     //if role is supervisor will return only his group.
     //and if  administrator will return all groups.
 
-    const data = await supervisor_employee_relations
+    const data = await SupervisorEmployeeRelation
       .find(filterWithID)
       .populate({
         path: "assigned_employees_id supervisor_id",

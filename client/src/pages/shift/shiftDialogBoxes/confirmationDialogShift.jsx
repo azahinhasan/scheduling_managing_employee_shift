@@ -53,8 +53,8 @@ const ConfirmationDialogShift = ({
       <DialogContent>
         Warning: This shift data will be not retrieve again!
         <br />
-        <br />
         <div style={{ color: msg.color }}>{msg.text}</div>
+        <br />
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             {" "}

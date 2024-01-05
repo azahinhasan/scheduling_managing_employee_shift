@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Button,
   Grid,
   Alert,
-  MenuItem,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -18,7 +15,6 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 import IconButton from "@mui/material/IconButton";
 import { createShift, updateShift } from "../../api-pages";
-import { UserContext } from "../../../context/user.context";
 
 const ShiftFormDialog = ({
   currentSelectedShift,
@@ -32,8 +28,13 @@ const ShiftFormDialog = ({
     text: "",
     color: "",
   });
-  console.log(currentSelectedShift, "currentSelectedShift");
 
+  useEffect(() => {
+    setMsg({
+      text: "",
+      color: "",
+    });
+  }, [open]);
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     let hours = date.getHours();
@@ -172,7 +173,15 @@ const ShiftFormDialog = ({
                       date: new Date(e).setUTCHours(0, 0, 0, 0),
                     })
                   }
-                  renderInput={(params) => <TextField {...params} style={{ width: '1000px!important',backgroundColor:"black" }} />}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      style={{
+                        width: "1000px!important",
+                        backgroundColor: "black",
+                      }}
+                    />
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
@@ -187,7 +196,7 @@ const ShiftFormDialog = ({
                       start_time: formatTime(e),
                     })
                   }
-                  renderInput={(params) => <TextField {...params} fullWidth/>}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
                 />
               </LocalizationProvider>
             </Grid>
@@ -202,7 +211,7 @@ const ShiftFormDialog = ({
                       end_time: formatTime(e),
                     })
                   }
-                  renderInput={(params) => <TextField {...params} fullWidth/>}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
                 />
               </LocalizationProvider>
             </Grid>
@@ -211,8 +220,8 @@ const ShiftFormDialog = ({
               <Alert variant="outlined" severity="warning">
                 - If any other shift have same date,start and end time, user
                 will not able to update or cheat shift.
-                <br/>
-                - Give valid color code or name into Label Color to change backgroundColor of Label name.
+                <br />- Give valid color code or name into Label Color to change
+                backgroundColor of Label name.
               </Alert>
             </Grid>
 
