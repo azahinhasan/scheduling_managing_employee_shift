@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import CustomPaper from "../../components/paper";
 import UserGroupDialog from "./dialogsBoxes/userGroupDialog";
-import { tagToSupervisor, getAllGroups, getUserList } from "../api-pages";
+import {  getAllGroups, getUserList } from "../api-pages";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
 import {
   Button,

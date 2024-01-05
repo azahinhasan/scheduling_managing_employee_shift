@@ -3,6 +3,7 @@ import { signIn } from "../api-pages";
 import { Paper, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import CustomPaper from "../../components/paper";
 
 const SignIn = () => {
   let navigate = useNavigate();
@@ -48,7 +49,7 @@ const SignIn = () => {
         height: "100vh", // Set to 100% of the viewport height
       }}
     >
-      <Paper elevation={4} style={{ width: "30%", padding: "20px" }}>
+      <CustomPaper>
         <h2> SIGN IN</h2>
         <TextField
           fullWidth
@@ -88,7 +89,7 @@ const SignIn = () => {
         >
           Sign Up
         </span>
-      </Paper>
+      </CustomPaper>
     </div>
   );
 };
