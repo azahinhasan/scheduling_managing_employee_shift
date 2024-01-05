@@ -242,7 +242,7 @@ const modifyShiftOfEmployee = async (req, res) => {
       case "remove":
         //removing from specific shift
         //require from client employee_id,current_shift_id
-        if (res.locals.requestedUser.role !== "admin") {
+        if (res.locals.requestedUser.role !== "administrator") {
           const employeeUnderSupervisor = await SupervisorEmployeeRelation.findOne(
             {
               supervisor_id: res.locals.requestedUser._id,

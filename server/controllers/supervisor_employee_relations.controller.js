@@ -29,7 +29,6 @@ const tagEmployeeToSupervisor = async (req, res) => {
       });
     }
 
-  
     await SupervisorEmployeeRelation.findOneAndUpdate(
       //removing employee from their previous supervisor.
       {
@@ -54,6 +53,35 @@ const tagEmployeeToSupervisor = async (req, res) => {
     }
 
     res.status(200).json({ success: true, message: "Employee successfully tagged" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+/**
+ * @memberof SupervisorEmployeeController
+ * @async
+ * @method
+ * @description Un-tag Employee from Supervisor
+ * @param {object} req - request object.
+ * @param {object} res - response object.
+ * @requires ../models/SupervisorEmployeeRelation.model
+ * @returns {JSON} - if success returns the object as data else error.
+ */
+const untagSupervisor = async (req, res) => {
+  try {
+    await SupervisorEmployeeRelation.findOneAndUpdate(
+      //removing employee from group.
+      {
+        assigned_employees_id: req.body.employee_id,
+      },
+      {
+        $pull: { assigned_employees_id: req.body.employee_id },
+      }
+    );
+   
+    res.status(200).json({ success: true, message: "Employee successfully untagged" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -104,4 +132,5 @@ const getEmployeeBySupervisorID = async (req, res) => {
 module.exports = {
   tagEmployeeToSupervisor,
   getEmployeeBySupervisorID,
+  untagSupervisor
 };

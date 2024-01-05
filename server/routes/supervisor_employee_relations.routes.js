@@ -5,10 +5,23 @@ const router = express.Router();
 
 router
   .route("/all_assigned_employee")
-  .get(authCheck.haveAccess,supervisorEmployeeRelationCtrl.getEmployeeBySupervisorID);
+  .get(
+    authCheck.haveAccess,
+    supervisorEmployeeRelationCtrl.getEmployeeBySupervisorID
+  );
 
 router
   .route("/tag_employee_to_supervisor")
-  .put(authCheck.haveAccess,supervisorEmployeeRelationCtrl.tagEmployeeToSupervisor);
+  .put(
+    authCheck.haveAccess,
+    supervisorEmployeeRelationCtrl.tagEmployeeToSupervisor
+  );
+
+router
+  .route("/untag_employee_from_supervisor")
+  .post(
+    authCheck.haveAccess,
+    supervisorEmployeeRelationCtrl.untagSupervisor
+  );
 
 module.exports = router;

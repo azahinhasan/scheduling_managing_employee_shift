@@ -122,7 +122,7 @@ const UserList = () => {
                           onClickHandler(row, "edit");
                         }}
                         name=""
-                        style={{ color: "#707070" }}
+                        style={{ color: "#003a96" }}
                       />
                     </Tooltip>
                     <Tooltip title="DELETE" placement="bottom">
@@ -131,7 +131,7 @@ const UserList = () => {
                         onClick={() => {
                           onClickHandler(row, "remove");
                         }}
-                        style={{ color: "#707070" }}
+                        style={{ color: "red" }}
                       />
                     </Tooltip>
                     <Tooltip title="SWITCH ROLE" placement="right">
@@ -140,7 +140,7 @@ const UserList = () => {
                         onClick={() => {
                           onClickHandler(row, "switchRole");
                         }}
-                        style={{ color: "#707070" }}
+                        style={{ color: "#03ad7d" }}
                       />
                     </Tooltip>
                   </TableCell>

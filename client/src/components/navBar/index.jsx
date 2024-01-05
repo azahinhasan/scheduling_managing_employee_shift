@@ -7,7 +7,6 @@ const Navbar = () => {
   let navigate = useNavigate();
   const logOutHandler = () => {
     Cookies.remove("token");
-    navigate("/sign-in");
     window.location.reload();
   };
 

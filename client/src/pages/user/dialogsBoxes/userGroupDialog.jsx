@@ -8,13 +8,17 @@ import {
   Grid,
   MenuItem,
 } from "@mui/material";
-import { tagToSupervisor, updateUser } from "../../api-pages";
+import {
+  untagFromSupervisor,
+  tagToSupervisor,
+  updateUser,
+} from "../../api-pages";
 
 const UserGroupDialog = ({
   open,
   handleClose,
   currentSelectedUser,
-  isTagging,
+  actionType,
   users,
 }) => {
   const [msg, setMsg] = useState({
@@ -35,7 +39,8 @@ const UserGroupDialog = ({
   }, [open]);
 
   const handleSubmit = () => {
-    if (isTagging) {
+    const { active_status, _id, ...other } = currentSelectedUser;
+    if (actionType === "tag") {
       tagToSupervisor(requestInfo).then((res) => {
         if (res.success) {
           handleClose();
@@ -50,8 +55,7 @@ const UserGroupDialog = ({
           });
         }
       });
-    } else {
-      const { active_status, _id, ...other } = currentSelectedUser;
+    } else if (actionType === "switch") {
       updateUser({ active_status: !active_status }, _id).then((res) => {
         if (res.success) {
           handleClose();
@@ -67,17 +71,35 @@ const UserGroupDialog = ({
           });
         }
       });
+    } else {
+      untagFromSupervisor({ employee_id: _id }).then((res) => {
+        if (res.success) {
+          handleClose();
+          setMsg({
+            text: res.message,
+            color: "green",
+          });
+        } else {
+          setMsg({
+            text: res.message,
+            color: "red",
+          });
+        }
+      });
     }
   };
 
   return (
     <Dialog fullWidth open={open} onClose={handleClose}>
       <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-        {isTagging
+        {actionType === "tag"
           ? "Tag Employee to Supervisor"
-          : "Do you want to switch active status?"}
+          : "Do you want to " +
+            (actionType === "switch"
+              ? "switch active status?"
+              : "untag this employee?")}
       </DialogTitle>
-      {isTagging ? (
+      {actionType === "tag" ? (
         <DialogContent fullWidth>
           <br />
           <Grid container spacing={2}>
@@ -144,10 +166,14 @@ const UserGroupDialog = ({
             <b>Note</b>
           </div>
           <div>Employee name is {currentSelectedUser.full_name}</div>
-          <div>
-            Current status is{" "}
-            {currentSelectedUser.active_status ? " Active" : "Not Active"}
-          </div>
+          {actionType === "switch" ? (
+            <div>
+              Current status is{" "}
+              {currentSelectedUser.active_status ? " Active" : "Not Active"}
+            </div>
+          ) : (
+            <div>You can tag this employee again.</div>
+          )}
           <br />
 
           <div style={{ color: msg.color }}>{msg.text}</div>

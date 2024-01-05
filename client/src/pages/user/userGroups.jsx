@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import CustomPaper from "../../components/paper";
 import UserGroupDialog from "./dialogsBoxes/userGroupDialog";
-import {  getAllGroups, getUserList } from "../api-pages";
+import { getAllGroups, getUserList } from "../api-pages";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
+import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 import {
   Button,
   Table,
@@ -51,13 +52,13 @@ const UserGroups = () => {
   };
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [isTagging, setIsTagging] = useState(false);
+  const [actionType, setActionType] = useState(false);
   const [currentSelectedUser, setCurrentSelectedUser] = useState({});
 
-  const onClickHandler = (data, actionTagging) => {
-    setIsTagging(actionTagging);
+  const onClickHandler = (data, action) => {
+    setActionType(action);
     setOpenDialog(true);
-    setCurrentSelectedUser(!actionTagging ? data : {});
+    setCurrentSelectedUser( ["switch","untag"].includes(action) ? data : {});
   };
 
   const handleCloseDialog = () => {
@@ -73,7 +74,7 @@ const UserGroups = () => {
           open={openDialog}
           handleClose={handleCloseDialog}
           currentSelectedUser={currentSelectedUser}
-          isTagging={isTagging}
+          actionType={actionType}
           users={users}
         />
 
@@ -88,7 +89,7 @@ const UserGroups = () => {
               <Button
                 fullWidth
                 onClick={() => {
-                  onClickHandler("", true);
+                  onClickHandler("", "tag");
                 }}
                 variant="contained"
                 style={{ height: "55px" }}
@@ -135,13 +136,26 @@ const UserGroups = () => {
                         <TableCell>{row.email}</TableCell>
                         <TableCell>{row?.contact_details?.phone}</TableCell>
                         <TableCell>
-                          <Tooltip title="CHANGE ACTIVE STATUS" placement="top">
+                          <Tooltip title="Untag" placement="left">
+                            <PersonRemoveAlt1Icon
+                              name=""
+                              onClick={() => {
+                                onClickHandler(row, "untag");
+                              }}
+                              style={{ color: "red" }}
+                            />
+                          </Tooltip>
+                          &nbsp;
+                          <Tooltip
+                            title="CHANGE ACTIVE STATUS"
+                            placement="right"
+                          >
                             <SwitchRightIcon
                               name=""
                               onClick={() => {
-                                onClickHandler(row, false);
+                                onClickHandler(row, "switch");
                               }}
-                              style={{ color: "#707070" }}
+                              style={{ color: "#003a96" }}
                             />
                           </Tooltip>
                         </TableCell>

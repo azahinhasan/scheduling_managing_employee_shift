@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import CustomPaper from "../../components/paper";
 import { FaList } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { FaClockRotateLeft } from "react-icons/fa6";
 import { GrGroup } from "react-icons/gr";
+import { MdOutlineViewTimeline } from "react-icons/md";
+
 import { UserContext } from "../../context/user.context";
 
 const Dashboard = () => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
   const style={
     border: "4px solid black",
     padding: "5px",
-    borderRadius: "2%",
+    borderRadius: "10px",
     margin: "5px",
     cursor: "pointer",
   }
@@ -23,7 +24,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <CustomPaper>
         <Grid container spacing={2}>
-          {permissionCheck('user/get_all')&&<Grid item xs={12} md={4}>
+          {permissionCheck('user/user/get_all_in_table')&&<Grid item xs={12} md={4}>
             <div
               style={style}
               onClick={() => navigate("/users")}
@@ -48,7 +49,7 @@ const Dashboard = () => {
               style={style}
               onClick={() => navigate("/shifts")}
             >
-              <FaClockRotateLeft style={{ fontSize: "80px" }} />
+              <MdOutlineViewTimeline style={{ fontSize: "80px" }} />
               <br />
               All Shifts
             </div>

@@ -167,7 +167,6 @@ const ShiftList = () => {
           <Grid item xs={12} md={3}>
             <Autocomplete
               disablePortal
-              id="combo-box-demo"
               value={filterInfo.employeeName}
               options={employees.map((el) => el.full_name)}
               renderInput={(params) => (
@@ -277,7 +276,7 @@ const ShiftList = () => {
                               onClickHandler(row, "edit");
                             }}
                             name=""
-                            style={{ color: "blue" }}
+                            style={{ color: "#003a96" }}
                           />
                         </Tooltip>
                         <Tooltip title="DELETE" placement="bottom">

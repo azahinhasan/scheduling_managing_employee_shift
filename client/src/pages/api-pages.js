@@ -209,6 +209,26 @@ const tagToSupervisor= async body => {
   }
 };
 
+const untagFromSupervisor= async body => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/untag_employee_from_supervisor`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const getAllShift = async () => {
   try {
     let response = await fetch(
@@ -319,6 +339,7 @@ export {
   getUserInfoById,
   getAllGroups,
   tagToSupervisor,
+  untagFromSupervisor,
   createShift,
   deleteShift,
   updateShift,

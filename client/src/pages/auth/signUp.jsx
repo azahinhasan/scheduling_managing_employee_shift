@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { signUp } from "../api-pages";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomPaper from "../../components/paper";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const SignUp = () => {
         height: "100vh", // Set to 100% of the viewport height
       }}
     >
-      <Paper elevation={4} style={{ width: "30%", padding: "20px" }}>
+      <CustomPaper>
         <h2>SIGN UP</h2>
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={1}>
@@ -181,7 +182,7 @@ const SignUp = () => {
             </Grid>
           </Grid>
         </form>
-      </Paper>
+      </CustomPaper>
     </div>
   );
 };
