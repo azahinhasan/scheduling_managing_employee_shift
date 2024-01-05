@@ -114,7 +114,6 @@ const getUserByID = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.user_id);
-    console.log(res.locals.requestedUser);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "No data found" });
@@ -128,7 +127,6 @@ const updateUser = async (req, res) => {
       res.locals.requestedUser._id === req.params.user_id
     ) {
       //if employee or user requesting for this profile then he can update his basic info.
-      console.log(req.body);
       await User.updateOne(
         { _id: req.params.user_id },
         {

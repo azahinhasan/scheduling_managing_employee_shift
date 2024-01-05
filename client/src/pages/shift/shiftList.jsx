@@ -111,14 +111,6 @@ const ShiftList = () => {
     setFilteredRows(filteredData);
   };
 
-  const convertTo12HourFormat = (time24) => {
-    if (!time24) return "none";
-    const [hours24, minutes] = time24.split(":");
-    const hours12 = ((parseInt(hours24) + 11) % 12) + 1;
-    const ampm = parseInt(hours24) >= 12 ? "PM" : "AM";
-
-    return `${hours12}:${minutes} ${ampm}`;
-  };
 
   return (
     <div>

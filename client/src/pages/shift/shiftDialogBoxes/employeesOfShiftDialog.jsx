@@ -1,18 +1,12 @@
 import CloseIcon from "@mui/icons-material/Close";
-
+import AddIcon from "@mui/icons-material/Add";
 import React, { useState, useEffect, useContext } from "react";
 import {
   Dialog,
   Tooltip,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
   Button,
   Grid,
-  Alert,
-  MenuItem,
   Slide,
   Typography,
   Toolbar,
@@ -23,17 +17,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Divider,
+  Snackbar ,
+  Alert
 } from "@mui/material";
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+
 import EastIcon from "@mui/icons-material/East";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-
 import IconButton from "@mui/material/IconButton";
-import { createShift, updateShift, modifyEmployeeShift } from "../../api-pages";
-import { UserContext } from "../../../context/user.context";
+import { getUserList, modifyEmployeeShift } from "../../api-pages";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -51,35 +44,61 @@ const EmployeesOfShiftDialog = ({
     text: "",
     color: "",
   });
-  console.log(currentSelectedShift, "currentSelectedShift");
+
   const [employeeShifts, setEmployeeShifts] = useState([]);
+  const [employeesForAdd, setEmployeesForAdd] = useState([]);
 
-  useEffect(()=>{},[shifts])
+  useEffect(() => {
+    setEmployeesForAdd([])
+    setEmployeeShifts([])
+    setMsg([])
+  }, [shifts,open]);
 
-  const deleteHandler = async (id) => {
+  const modifyEmployeeShiftHandler = async (id, type) => {
     //current_shift_id,new_shift_id,employee_id,action_type
 
-    console.log(currentSelectedShift);
-    modifyEmployeeShift({current_shift_id:currentSelectedShift._id,employee_id:id,action_type:"remove"}).then((res) => {
+    let temp={current_shift_id: currentSelectedShift._id}
+    if(type==="add"){
+      temp={new_shift_id: currentSelectedShift._id}
+    }
+    modifyEmployeeShift({
+      ...temp,
+      employee_id: id,
+      action_type: type,
+    }).then((res) => {
       console.log(res);
       if (res.success) {
         getAllShiftHandler();
         handleClose();
-        // setcurrentSelectedShift("");
       } else {
         setMsg({
           text: res.message,
-          color: "red",
+          color: "error",
         });
       }
     });
   };
 
   const showUserShifts = (id) => {
-    console.log(shifts)
-    setEmployeeShifts(shifts.filter(el=>{
-      return el.assigned_employee.find(e=>e._id===id)
-    }));
+    console.log(shifts);
+    setEmployeeShifts(
+      shifts.filter((el) => {
+        return el.assigned_employee.find((e) => e._id === id);
+      })
+    );
+  };
+
+  const getAllEmployeesHandler = () => {
+    setEmployeeShifts([]);
+    getUserList().then((res) => {
+      if (res.success) {
+        const temp = res.data.filter(
+          (el) => el.role?.role_name?.toLowerCase() === "employee"
+        );
+        setEmployeesForAdd(temp);
+      }
+      console.log(res, "all employee");
+    });
   };
 
   return (
@@ -101,14 +120,27 @@ const EmployeesOfShiftDialog = ({
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Employess of this Shift
+              Employees of this Shift
             </Typography>
           </Toolbar>
         </AppBar>
         <DialogContent>
           <Grid container spacing={1}>
             <Grid item xs={12} md={8}>
-              <TableContainer style={{border:"1px solid black"}}>
+              {" "}
+              <Button
+                style={{ height: "55px" }}
+                fullWidth
+                variant="contained"
+                disabled={employeesForAdd.length>0}
+                onClick={() => getAllEmployeesHandler()}
+              >
+                <AddIcon /> Add Employee
+              </Button>
+            </Grid>
+
+            <Grid item xs={12} md={8}>
+              <TableContainer style={{ border: "1px solid black" }}>
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
@@ -127,41 +159,74 @@ const EmployeesOfShiftDialog = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {currentSelectedShift.assigned_employee?.map((row) => (
-                      <TableRow key={row._id}>
-                        <TableCell>{row.full_name}</TableCell>
-                        <TableCell>{row.email}</TableCell>
-                        <TableCell>{row.contact_details?.phone}</TableCell>
-                        <TableCell key={row.id}>
-                          <Tooltip title="DELETE" placement="left">
-                            <DeleteForeverIcon
-                              name=""
-                              onClick={() => {
-                                deleteHandler(row._id);
-                              }}
-                              style={{ color: "red" }}
-                            />
-                          </Tooltip>
-                          <Tooltip title="SHIFTS" placement="right">
-                            <EastIcon
-                              name=""
-                              onClick={() => {
-                                showUserShifts(row._id);
-                              }}
-                              style={{ color: "blue" }}
-                            />
-                          </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {employeesForAdd.length > 0
+                      ? employeesForAdd?.map((row) => (
+                          <TableRow key={row._id}>
+                            <TableCell>{row.full_name}</TableCell>
+                            <TableCell>{row.email}</TableCell>
+                            <TableCell>{row.contact_details?.phone}</TableCell>
+                            <TableCell key={row.id}>
+                              <Tooltip title="ADD" placement="left">
+                                <BookmarkAddOutlinedIcon
+                                  name=""
+                                  onClick={() => {
+                                    modifyEmployeeShiftHandler(row._id, "add");
+                                  }}
+                                  style={{ color: "green" }}
+                                />
+                              </Tooltip>
+                              <Tooltip title="SHIFTS" placement="right">
+                                <EastIcon
+                                  name=""
+                                  onClick={() => {
+                                    showUserShifts(row._id);
+                                  }}
+                                  style={{ color: "blue" }}
+                                />
+                              </Tooltip>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      : currentSelectedShift.assigned_employee?.map((row) => (
+                          <TableRow key={row._id}>
+                            <TableCell>{row.full_name}</TableCell>
+                            <TableCell>{row.email}</TableCell>
+                            <TableCell>{row.contact_details?.phone}</TableCell>
+                            <TableCell key={row.id}>
+                              <Tooltip title="DELETE" placement="left">
+                                <DeleteForeverIcon
+                                  name=""
+                                  onClick={() => {
+                                    modifyEmployeeShiftHandler(
+                                      row._id,
+                                      "remove"
+                                    );
+                                  }}
+                                  style={{ color: "red" }}
+                                />
+                              </Tooltip>
+                              <Tooltip title="SHIFTS" placement="right">
+                                <EastIcon
+                                  name=""
+                                  onClick={() => {
+                                    showUserShifts(row._id);
+                                  }}
+                                  style={{ color: "blue" }}
+                                />
+                              </Tooltip>
+                            </TableCell>
+                          </TableRow>
+                        ))}
                   </TableBody>
                 </Table>
               </TableContainer>
             </Grid>
-            {/* <Grid item xs={12} md={1}></Grid> */}
+            {/* <Grid item xs={12} md={1}>
+              <Divider orientation="vertical" variant="middle" flexItem />
+            </Grid> */}
             <Grid item xs={12} md={4}>
-              {employeeShifts.length > 0 && (
-                <TableContainer style={{border:"1px solid black"}}>
+              {employeeShifts.length > 0 ? (
+                <TableContainer style={{ border: "1px solid black" }}>
                   <Table aria-label="simple table">
                     <TableHead>
                       <TableRow>
@@ -175,21 +240,33 @@ const EmployeesOfShiftDialog = ({
                     </TableHead>
                     <TableBody>
                       {employeeShifts?.map((row) => (
-                        <TableRow key={row.id}>
-                          <TableCell>{row.label}</TableCell>
-                          <TableCell style={{maxWidth:"30px"}}>
-                            {new Date(row.date).toDateString()} ( {row.start_time}- {row.end_time})
+                        <TableRow key={row._id}>
+                          <TableCell>
+                            {row.label}
+                            {row._id === currentSelectedShift._id &&
+                              " (selected shift)"}
+                          </TableCell>
+                          <TableCell style={{ maxWidth: "30px" }}>
+                            {new Date(row.date).toDateString()} ({" "}
+                            {row.start_time}- {row.end_time})
                           </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
+              ) : (
+                <h2 style={{ textAlign: "center" }}>No shift Data</h2>
               )}
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar open={msg.text} autoHideDuration={6000}>
+        <Alert severity={msg.color} sx={{ width: '100%' }}>
+         {msg.text}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

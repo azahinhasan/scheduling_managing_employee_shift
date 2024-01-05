@@ -159,9 +159,6 @@ const updateShift = async (req, res) => {
  */
 const modifyShiftOfEmployee = async (req, res) => {
   try {
-    //current_shift_id,new_shift_id,employee_id,action_type
-    console.log(req.body)
-    // return;
 
     if (!req.body.employee_id||!req.body.action_type) {
       return  res.status(400).json({ success: false, message: "Missing action type or employee id" });
@@ -178,13 +175,15 @@ const modifyShiftOfEmployee = async (req, res) => {
         if (!req.body.new_shift_id) {
           return  res.status(400).json({ success: false, message: "New shift id require" });
         }
+
         let temp = await Shift.findOne({
           date: new_shift.date,
           assigned_employee: req.body.employee_id,
         });
-        if (!temp) {
-          new_shift.assigned_employee.push(req.body.employee_id);
+        if (temp) {
+          return  res.status(400).json({ success: false, message: "User already have shift on same day" });
         }
+        new_shift.assigned_employee.push(req.body.employee_id);
         new_shift.save();
         break;
       case "switch":
@@ -195,7 +194,6 @@ const modifyShiftOfEmployee = async (req, res) => {
         }
         
         if (current_shift.date.toString() === new_shift.date.toString() ) {
-          console.log("dddddddddddd")
           new_shift.assigned_employee.push(req.body.employee_id);
           await Shift.findOneAndUpdate(
             { _id: current_shift._id },

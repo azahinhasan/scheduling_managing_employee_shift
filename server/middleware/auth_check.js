@@ -21,7 +21,6 @@ const config = require("../config/config");
 const haveAccess = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    console.log(token, "token from client");
     res.locals.can_create_any_user = true;
     //will help to let know is it create request from Sign up(role=employee) or from admin want to create user.
     const requestedRoute = req.originalUrl
@@ -29,11 +28,6 @@ const haveAccess = async (req, res, next) => {
       .split("/")
       .slice(0, 2)
       .join("/"); //filtering main route(such as: user/update from api/user/update/123) from full route
-    console.log(requestedRoute);
-
-    console.log("req.originalUrl:", req.originalUrl.replace("/api/", ""));
-    console.log(token);
-
     if (!token) {
       if (requestedRoute === "user/create") {
         res.locals.can_create_any_user = false;
