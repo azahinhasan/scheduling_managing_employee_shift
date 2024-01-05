@@ -19,7 +19,6 @@ const UserFormDialog = ({
   open,
   handleClose,
   currentSelectedUser,
-  getAllUser,
   setCurrentSelectedUser,
   isCreating,
 }) => {
@@ -43,9 +42,7 @@ const UserFormDialog = ({
       const { _id, ...otherInfo } = currentSelectedUser;
       updateUser(otherInfo, _id).then((res) => {
         if (res.success) {
-          getAllUser();
           handleClose();
-          // setCurrentSelectedUser("");
         } else {
           setMsg({
             text: res.message,
@@ -56,9 +53,7 @@ const UserFormDialog = ({
     } else {
       createUser(currentSelectedUser).then((res) => {
         if (res.success) {
-          getAllUser();
           handleClose();
-          // setCurrentSelectedUser("");
         } else {
           setMsg({
             text: res.message,

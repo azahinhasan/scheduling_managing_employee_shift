@@ -19,7 +19,6 @@ const ConfirmationDialog = ({
   open,
   handleClose,
   currentSelectedUser,
-  getAllUser,
   isRemoving,
 }) => {
   const [msg, setMsg] = useState({
@@ -39,9 +38,7 @@ const ConfirmationDialog = ({
     if (isRemoving) {
       deleteUser(_id).then((res) => {
         if (res.success) {
-          getAllUser();
           handleClose();
-          // setCurrentSelectedUser("");
         } else {
           setMsg({
             text: res.message,
@@ -52,7 +49,7 @@ const ConfirmationDialog = ({
     } else {
       changeRole(_id).then((res) => {
         if (res.success) {
-          getAllUser();
+         // getAllUser();
           handleClose();
           // setCurrentSelectedUser("");
         } else {

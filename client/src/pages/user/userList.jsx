@@ -40,6 +40,7 @@ const UserList = () => {
   };
 
   const handleCloseEditDialog = () => {
+    getAllUser()
     setOpenEditDialog(false);
     setOpenConfirmationDialog(false);
   };
@@ -60,7 +61,6 @@ const UserList = () => {
         open={openEditDialog}
         setCurrentSelectedUser={setCurrentSelectedUser}
         handleClose={handleCloseEditDialog}
-        getAllUser={getAllUser}
         isCreating={actionType === "add" ? true : false}
       />
 
@@ -68,7 +68,6 @@ const UserList = () => {
         currentSelectedUser={currentSelectedUser}
         open={openConfirmationDialog}
         handleClose={handleCloseEditDialog}
-        getAllUser={getAllUser}
         isRemoving={actionType === "remove" ? true : false}
       />
 

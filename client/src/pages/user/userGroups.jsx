@@ -62,8 +62,8 @@ const UserGroups = () => {
   };
 
   const handleCloseDialog = () => {
+    getAllGroupsHandler();
     setOpenDialog(false);
-    getAllGroups();
   };
 
   return (
