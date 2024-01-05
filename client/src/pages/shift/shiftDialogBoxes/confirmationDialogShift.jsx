@@ -28,10 +28,8 @@ const ConfirmationDialogShift = ({
   }, [currentSelectedShift]);
 
   const handleYes = async () => {
-    console.log(currentSelectedShift);
     const { _id, ...otherInfo } = currentSelectedShift;
     deleteShift(_id).then((res) => {
-      console.log(res);
       if (res.success) {
         getAllShiftHandler();
         handleClose();

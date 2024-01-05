@@ -27,7 +27,6 @@ const UserGroups = () => {
   useEffect(() => {
     getAllGroupsHandler();
     getUserList().then((res) => {
-      console.log(res);
       if (res.success) {
         setUsers({
           supervisors: res.data.filter(
@@ -45,7 +44,6 @@ const UserGroups = () => {
 
   const getAllGroupsHandler = () => {
     getAllGroups().then((res) => {
-      console.log(res);
       if (res.success) {
         setGroupData(res.data);
       }

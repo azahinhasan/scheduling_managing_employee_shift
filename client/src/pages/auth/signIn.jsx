@@ -18,7 +18,6 @@ const SignIn = () => {
 
   const handleSubmit = async () => {
     signIn(credentials).then((res) => {
-      console.log(res)
       if (res.success) {
         Cookies.set("token", res.token);
         // Cookies.set(

@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { getAllRoles } from "../pages/api-pages";
+import Cookies from "js-cookie";
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
@@ -7,7 +8,7 @@ const UserContextProvider = (props) => {
   const [permissions, setPermissions] = useState([]);
 
   useEffect(() => {
-    getAllRoles().then((res) => {
+    Cookies.get("token")&&getAllRoles().then((res) => {
       if (res.success) {
         setRoles(res.data);
         const temp = res.data.filter((el) => el.permissions.length > 1);

@@ -35,11 +35,9 @@ const ConfirmationDialog = ({
   }, [currentSelectedUser]);
 
   const handleYes = async () => {
-    console.log(currentSelectedUser);
     const { _id, ...otherInfo } = currentSelectedUser;
     if (isRemoving) {
       deleteUser(_id).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllUser();
           handleClose();
@@ -53,7 +51,6 @@ const ConfirmationDialog = ({
       });
     } else {
       changeRole(_id).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllUser();
           handleClose();

@@ -37,14 +37,11 @@ const UserFormDialog = ({
     });
   }, [currentSelectedUser]);
 
-  console.log(currentSelectedUser);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(currentSelectedUser);
     if (!isCreating) {
       const { _id, ...otherInfo } = currentSelectedUser;
       updateUser(otherInfo, _id).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllUser();
           handleClose();
@@ -58,7 +55,6 @@ const UserFormDialog = ({
       });
     } else {
       createUser(currentSelectedUser).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllUser();
           handleClose();

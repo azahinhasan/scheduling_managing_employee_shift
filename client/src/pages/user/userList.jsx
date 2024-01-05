@@ -33,7 +33,6 @@ const UserList = () => {
 
   const getAllUser = () => {
     getUserList().then((res) => {
-      console.log(res);
       if (res.success) {
         res.data?.length > 0 && setRows(res.data);
       }

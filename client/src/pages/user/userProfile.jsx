@@ -22,7 +22,6 @@ const UserProfile = () => {
     event.preventDefault();
     const { _id, ...otherInfo } = userData;
     updateUser(otherInfo, _id).then((res) => {
-      console.log(res);
       if (res.success) {
         setMsg({
           text: res.message,

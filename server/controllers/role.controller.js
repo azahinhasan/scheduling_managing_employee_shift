@@ -52,7 +52,6 @@ const createRole = async (req, res) => {
   try {
     //only role_name req from client
     const role = await Role.find({ role_name: req.body.role_name });
-    console.log(role);
     if (!role || role.length === 0) {
       await Role.create({ role_name: req.body.role_name });
     }

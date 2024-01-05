@@ -71,7 +71,6 @@ const ShiftFormDialog = ({
     if (!isCreating) {
       const { _id, ...otherInfo } = currentSelectedShift;
       updateShift(otherInfo, _id).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllShiftHandler();
           handleClose();
@@ -85,7 +84,6 @@ const ShiftFormDialog = ({
       });
     } else {
       createShift(currentSelectedShift).then((res) => {
-        console.log(res);
         if (res.success) {
           getAllShiftHandler();
           handleClose();
@@ -98,8 +96,6 @@ const ShiftFormDialog = ({
         }
       });
     }
-
-    console.log(currentSelectedShift, "currentSelectedShift");
   };
 
   function setTimeToMidnight(dateTimeString) {

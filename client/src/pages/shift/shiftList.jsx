@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   TextField,
   Button,
@@ -13,6 +13,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 
+import { UserContext } from "../../context/user.context";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import YoutubeSearchedForIcon from "@mui/icons-material/YoutubeSearchedFor";
@@ -24,12 +25,13 @@ import EmployeesOfShiftDialog from "./shiftDialogBoxes/employeesOfShiftDialog";
 import ShiftFormDialog from "./shiftDialogBoxes/shiftFormDialog";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import GroupsIcon from '@mui/icons-material/Groups';
+import GroupsIcon from "@mui/icons-material/Groups";
 import CustomPaper from "../../components/paper";
 import { getAllShift, getUserList } from "../api-pages";
 
 const ShiftList = () => {
   const [rows, setRows] = useState([]);
+  const { permissionCheck } = useContext(UserContext);
   const [filteredRows, setFilteredRows] = useState([]);
   const [actionType, setActionType] = useState(false);
   const [filterInfo, setFilterInfo] = useState({
@@ -48,7 +50,6 @@ const ShiftList = () => {
     getAllShiftHandler();
 
     getUserList().then((res) => {
-      console.log(res);
       if (res.success) {
         const temp = res.data.filter(
           (el) => el.role?.role_name?.toLowerCase() === "employee"
@@ -60,7 +61,6 @@ const ShiftList = () => {
 
   const getAllShiftHandler = () => {
     getAllShift().then((res) => {
-      console.log(res);
       if (res.success) {
         setRows(res.data);
         setFilteredRows(res.data);
@@ -97,7 +97,6 @@ const ShiftList = () => {
       setFilteredRows(rows);
       return;
     }
-    console.log(filterInfo);
 
     const filteredData = rows.filter((item) => {
       const itemDate = new Date(item.date);
@@ -110,7 +109,6 @@ const ShiftList = () => {
     });
     setFilteredRows(filteredData);
   };
-
 
   return (
     <div>
@@ -204,28 +202,30 @@ const ShiftList = () => {
               <YoutubeSearchedForIcon />
             </Button>
           </Grid>
-          <Grid item xs={12} md={1}>
-            <Button
-              style={{ height: "55px" }}
-              fullWidth
-              onClick={() => {
-                onClickHandler(
-                  {
-                    end_time: "12:00 PM",
-                    start_time: "12:00 PM",
-                    date: new Date().setUTCHours(0, 0, 0, 0),
-                    label_color: "",
-                    label: "",
-                    assigned_employee: [],
-                  },
-                  "create"
-                );
-              }}
-              variant="contained"
-            >
-              <AddIcon />
-            </Button>
-          </Grid>
+          {permissionCheck("shift/create") && (
+            <Grid item xs={12} md={1}>
+              <Button
+                style={{ height: "55px" }}
+                fullWidth
+                onClick={() => {
+                  onClickHandler(
+                    {
+                      end_time: "12:00 PM",
+                      start_time: "12:00 PM",
+                      date: new Date().setUTCHours(0, 0, 0, 0),
+                      label_color: "",
+                      label: "",
+                      assigned_employee: [],
+                    },
+                    "create"
+                  );
+                }}
+                variant="contained"
+              >
+                <AddIcon />
+              </Button>
+            </Grid>
+          )}
         </Grid>
         <TableContainer>
           <Table aria-label="simple table">
@@ -269,31 +269,34 @@ const ShiftList = () => {
                     {row.end_time}
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="EDIT" placement="left">
-                      <EditIcon
-                        onClick={() => {
-                          onClickHandler(row, "edit");
-                        }}
-                        name=""
-                        style={{ color: "blue" }}
-                      />
-                    </Tooltip>
-                    <Tooltip title="DELETE" placement="bottom">
-                      <DeleteForeverIcon
-                        name=""
-                        onClick={() => {
-                          onClickHandler(row, "remove");
-                        }}
-                        style={{ color: "red" }}
-                      />
-                    </Tooltip>
+                    {(
+                      <>
+                        <Tooltip title="EDIT" placement="left">
+                          <EditIcon
+                            onClick={() => {
+                              onClickHandler(row, "edit");
+                            }}
+                            name=""
+                            style={{ color: "blue" }}
+                          />
+                        </Tooltip>
+                        <Tooltip title="DELETE" placement="bottom">
+                          <DeleteForeverIcon
+                            name=""
+                            onClick={() => {
+                              onClickHandler(row, "remove");
+                            }}
+                            style={{ color: "red" }}
+                          />
+                        </Tooltip>
+                      </>
+                    )}
                     <Tooltip title="Employees" placement="right">
                       <GroupsIcon
                         name=""
                         onClick={() => {
                           onClickHandler(row, "employees");
                         }}
-                       
                       />
                     </Tooltip>
                   </TableCell>

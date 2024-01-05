@@ -24,7 +24,6 @@ const SignUp = () => {
       return;
     }
 
-    console.log(otherData.contact_details.phone.length)
     if (otherData.contact_details.phone.length>14) {
       setMsg({
         text: "Phone number length should be less then 15",
@@ -34,7 +33,6 @@ const SignUp = () => {
     }
 
     await signUp(credentials).then((res) => {
-      console.log(res)
       if (res.success) {
         setMsg({
           text: res.message,

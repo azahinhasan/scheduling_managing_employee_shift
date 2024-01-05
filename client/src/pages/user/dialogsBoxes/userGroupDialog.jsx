@@ -35,10 +35,8 @@ const UserGroupDialog = ({
   }, [open]);
 
   const handleSubmit = () => {
-    console.log(requestInfo);
     if (isTagging) {
       tagToSupervisor(requestInfo).then((res) => {
-        console.log(res);
         if (res.success) {
           handleClose();
           setMsg({
@@ -55,7 +53,6 @@ const UserGroupDialog = ({
     } else {
       const { active_status, _id, ...other } = currentSelectedUser;
       updateUser({ active_status: !active_status }, _id).then((res) => {
-        console.log(res);
         if (res.success) {
           handleClose();
           setMsg({

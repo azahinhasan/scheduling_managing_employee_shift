@@ -66,7 +66,6 @@ const EmployeesOfShiftDialog = ({
       employee_id: id,
       action_type: type,
     }).then((res) => {
-      console.log(res);
       if (res.success) {
         getAllShiftHandler();
         handleClose();
@@ -80,7 +79,6 @@ const EmployeesOfShiftDialog = ({
   };
 
   const showUserShifts = (id) => {
-    console.log(shifts);
     setEmployeeShifts(
       shifts.filter((el) => {
         return el.assigned_employee.find((e) => e._id === id);
@@ -97,7 +95,6 @@ const EmployeesOfShiftDialog = ({
         );
         setEmployeesForAdd(temp);
       }
-      console.log(res, "all employee");
     });
   };
 
