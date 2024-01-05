@@ -20,6 +20,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import ConfirmationDialogShift from "./shiftDialogBoxes/confirmationDialogShift";
+import EmployeesOfShiftDialog from "./shiftDialogBoxes/employeesOfShiftDialog";
 import ShiftFormDialog from "./shiftDialogBoxes/shiftFormDialog";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -38,6 +39,7 @@ const ShiftList = () => {
   const [employees, setEmployees] = useState([]);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const [openFormDialog, setOpenFormDialog] = useState(false);
+  const [openEmployeesDialog, setOpenEmployeesDialog] = useState(false);
 
   const [currentSelectedShift, setCurrentSelectedShift] = useState({});
 
@@ -74,12 +76,15 @@ const ShiftList = () => {
     } else if (["create", "edit"].includes(action)) {
       setOpenFormDialog(true);
       setOpenConfirmationDialog(false);
+    } else if (action === "employees") {
+      setOpenEmployeesDialog(true);
     }
   };
 
   const handleCloseDialog = () => {
     setOpenConfirmationDialog(false);
     setOpenFormDialog(false);
+    setOpenEmployeesDialog(false);
   };
   const filterHandler = (type) => {
     if (type === "reset") {
@@ -130,6 +135,15 @@ const ShiftList = () => {
           handleClose={handleCloseDialog}
           getAllShiftHandler={getAllShiftHandler}
           isCreating={actionType === "create" ? true : false}
+          setCurrentSelectedShift={setCurrentSelectedShift}
+        />
+
+        <EmployeesOfShiftDialog
+          currentSelectedShift={currentSelectedShift}
+          open={openEmployeesDialog}
+          handleClose={handleCloseDialog}
+          getAllShiftHandler={getAllShiftHandler}
+          shifts={rows}
           setCurrentSelectedShift={setCurrentSelectedShift}
         />
 
@@ -231,10 +245,10 @@ const ShiftList = () => {
                   <b>Date</b>
                 </TableCell>
                 <TableCell>
-                  <b>Start Time(24h)</b>
+                  <b>Start Time</b>
                 </TableCell>
                 <TableCell>
-                  <b>End Time(24h)</b>
+                  <b>End Time</b>
                 </TableCell>
                 <TableCell>
                   <b>Employees</b>
@@ -248,7 +262,10 @@ const ShiftList = () => {
               {filteredRows.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell
-                    style={{ maxWidth: "70px", backgroundColor: row.label_color||"white"}}
+                    style={{
+                      maxWidth: "70px",
+                      backgroundColor: row.label_color || "white",
+                    }}
                   >
                     {row.label || "noe"}
                   </TableCell>
@@ -261,7 +278,18 @@ const ShiftList = () => {
                   <TableCell style={{ maxWidth: "70px" }}>
                     {row.end_time}
                   </TableCell>
-                  <TableCell>List</TableCell>
+                  <TableCell>
+                    {" "}
+                    <Tooltip title="DELETE" placement="right">
+                      <DeleteForeverIcon
+                        name=""
+                        onClick={() => {
+                          onClickHandler(row, "employees");
+                        }}
+                        style={{ color: "#707070" }}
+                      />
+                    </Tooltip>
+                  </TableCell>
                   <TableCell>
                     <Tooltip title="EDIT" placement="left">
                       <EditIcon

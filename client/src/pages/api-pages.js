@@ -287,6 +287,26 @@ const updateShift = async (body,id) => {
   }
 };
 
+const modifyEmployeeShift = async (body,id) => {
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_PROXY + `/api/shift/modify_employees_shift`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: Cookies.get("token"),
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export {
   signIn,
   signUp,
@@ -302,5 +322,6 @@ export {
   createShift,
   deleteShift,
   updateShift,
-  getAllShift
+  getAllShift,
+  modifyEmployeeShift
 };
