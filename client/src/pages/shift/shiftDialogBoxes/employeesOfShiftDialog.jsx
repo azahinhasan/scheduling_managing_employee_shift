@@ -18,8 +18,8 @@ import {
   TableHead,
   TableRow,
   Divider,
-  Snackbar ,
-  Alert
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 
@@ -49,17 +49,17 @@ const EmployeesOfShiftDialog = ({
   const [employeesForAdd, setEmployeesForAdd] = useState([]);
 
   useEffect(() => {
-    setEmployeesForAdd([])
-    setEmployeeShifts([])
-    setMsg([])
-  }, [shifts,open]);
+    setEmployeesForAdd([]);
+    setEmployeeShifts([]);
+    setMsg([]);
+  }, [shifts, open]);
 
   const modifyEmployeeShiftHandler = async (id, type) => {
     //current_shift_id,new_shift_id,employee_id,action_type
 
-    let temp={current_shift_id: currentSelectedShift._id}
-    if(type==="add"){
-      temp={new_shift_id: currentSelectedShift._id}
+    let temp = { current_shift_id: currentSelectedShift._id };
+    if (type === "add") {
+      temp = { new_shift_id: currentSelectedShift._id };
     }
     modifyEmployeeShift({
       ...temp,
@@ -129,7 +129,7 @@ const EmployeesOfShiftDialog = ({
                 style={{ height: "55px" }}
                 fullWidth
                 variant="contained"
-                disabled={employeesForAdd.length>0}
+                disabled={employeesForAdd.length > 0}
                 onClick={() => getAllEmployeesHandler()}
               >
                 <AddIcon /> Add Employee
@@ -141,6 +141,9 @@ const EmployeesOfShiftDialog = ({
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
+                      <TableCell>
+                        <b>#</b>
+                      </TableCell>
                       <TableCell>
                         <b>Name</b>
                       </TableCell>
@@ -157,8 +160,9 @@ const EmployeesOfShiftDialog = ({
                   </TableHead>
                   <TableBody>
                     {employeesForAdd.length > 0
-                      ? employeesForAdd?.map((row) => (
+                      ? employeesForAdd?.map((row, i) => (
                           <TableRow key={row._id}>
+                            <TableCell>{i + 1}</TableCell>
                             <TableCell>{row.full_name}</TableCell>
                             <TableCell>{row.email}</TableCell>
                             <TableCell>{row.contact_details?.phone}</TableCell>
@@ -184,36 +188,41 @@ const EmployeesOfShiftDialog = ({
                             </TableCell>
                           </TableRow>
                         ))
-                      : currentSelectedShift.assigned_employee?.map((row) => (
-                          <TableRow key={row._id}>
-                            <TableCell>{row.full_name}</TableCell>
-                            <TableCell>{row.email}</TableCell>
-                            <TableCell>{row.contact_details?.phone}</TableCell>
-                            <TableCell key={row.id}>
-                              <Tooltip title="DELETE" placement="left">
-                                <DeleteForeverIcon
-                                  name=""
-                                  onClick={() => {
-                                    modifyEmployeeShiftHandler(
-                                      row._id,
-                                      "remove"
-                                    );
-                                  }}
-                                  style={{ color: "red" }}
-                                />
-                              </Tooltip>
-                              <Tooltip title="SHIFTS" placement="right">
-                                <EastIcon
-                                  name=""
-                                  onClick={() => {
-                                    showUserShifts(row._id);
-                                  }}
-                                  style={{ color: "blue" }}
-                                />
-                              </Tooltip>
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                      : currentSelectedShift.assigned_employee?.map(
+                          (row, i) => (
+                            <TableRow key={row._id}>
+                              <TableCell>{i + 1}</TableCell>
+                              <TableCell>{row.full_name}</TableCell>
+                              <TableCell>{row.email}</TableCell>
+                              <TableCell>
+                                {row.contact_details?.phone}
+                              </TableCell>
+                              <TableCell key={row.id}>
+                                <Tooltip title="DELETE" placement="left">
+                                  <DeleteForeverIcon
+                                    name=""
+                                    onClick={() => {
+                                      modifyEmployeeShiftHandler(
+                                        row._id,
+                                        "remove"
+                                      );
+                                    }}
+                                    style={{ color: "red" }}
+                                  />
+                                </Tooltip>
+                                <Tooltip title="SHIFTS" placement="right">
+                                  <EastIcon
+                                    name=""
+                                    onClick={() => {
+                                      showUserShifts(row._id);
+                                    }}
+                                    style={{ color: "blue" }}
+                                  />
+                                </Tooltip>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -260,8 +269,8 @@ const EmployeesOfShiftDialog = ({
         </DialogContent>
       </Dialog>
       <Snackbar open={msg.text} autoHideDuration={6000}>
-        <Alert severity={msg.color} sx={{ width: '100%' }}>
-         {msg.text}
+        <Alert severity={msg.color} sx={{ width: "100%" }}>
+          {msg.text}
         </Alert>
       </Snackbar>
     </div>

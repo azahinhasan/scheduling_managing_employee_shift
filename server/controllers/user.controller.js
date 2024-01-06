@@ -34,7 +34,7 @@ const getAllUser = async (req, res) => {
         { path: "role", select: "-permissions" },
       ]);
 
-      list = list.assigned_employees_id;
+      list = list?.assigned_employees_id ? list.assigned_employees_id : [];
     }
     res
       .status(200)
@@ -121,13 +121,13 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ success: false, message: "No data found" });
     }
 
-    
-
     const requestedUser = res.locals.requestedUser;
     if (requestedUser.role === "administrator") {
       //if administrator then he can update any info for any user.
       await User.findByIdAndUpdate(req.params.user_id, req.body);
-    } else if (res.locals.requestedUser._id.toString() === req.params.user_id.toString()) {
+    } else if (
+      res.locals.requestedUser._id.toString() === req.params.user_id.toString()
+    ) {
       //if employee or user requesting for this profile then he can update his basic info.
       const { role, active_status, ...allOtherInfo } = req.body;
       await User.updateOne({ _id: req.params.user_id }, allOtherInfo);
