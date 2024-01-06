@@ -21,7 +21,7 @@ const tagEmployeeToSupervisor = async (req, res) => {
       supervisor_id: req.body.supervisor_id,
     }); //checking is supervisor_id exist or not into the SupervisorEmployeeRelation collection
 
-    if (existingSupervisor?.assigned_employees_id.includes(req.body.employee_id)) {
+    if (existingSupervisor&&existingSupervisor.assigned_employees_id.includes(req.body.employee_id)) {
       //checking is employee_id already exist or not under requested supervisor.
       return res.status(400).json({
         success: false,

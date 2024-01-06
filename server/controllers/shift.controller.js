@@ -108,9 +108,9 @@ const createShift = async (req, res) => {
         .json({ success: false, message: "Same Type Shift Already Exist!" });
     }
 
-    await Shift.create(req.body);
+    const data=await Shift.create(req.body);
 
-    res.status(200).json({ success: true, message: "Created Successfully" });
+    res.status(201).json({ success: true, message: "Shift Created Successfully",data });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Something Want Wrong!" });
@@ -131,7 +131,7 @@ const deleteShift = async (req, res) => {
   try {
     const shift = await Shift.findByIdAndDelete(req.params.shift_id);
     res
-      .status(200)
+      .status(204)
       .json({ success: true, message: "Shift deleted", data: shift });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -177,7 +177,7 @@ const updateShift = async (req, res) => {
  * @async
  * @method
  * @description Add,remove or switch in same day shift of employee
- * @param {object} req - request object.
+ * @param {object} req - request object(must include employee_id,action_type).
  * @param {object} res - response object.
  * @requires ../models/shift.model
  * @returns {JSON} - if success returns the object as data else error.

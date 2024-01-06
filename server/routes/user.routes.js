@@ -9,10 +9,10 @@ router.route("/update/:user_id").put(authCheck.haveAccess, userCtrl.updateUser);
 router
   .route("/change_role/:user_id")
   .post(authCheck.haveAccess, userCtrl.changeUserRole);
-router
-  .route("/get_by_id")
-  .get(authCheck.haveAccess, userCtrl.getUserByID);
+router.route("/get_by_id").get(authCheck.haveAccess, userCtrl.getUserByID);
 router
   .route("/delete/:user_id")
   .delete(authCheck.haveAccess, userCtrl.deleteUser);
 module.exports = router;
+
+

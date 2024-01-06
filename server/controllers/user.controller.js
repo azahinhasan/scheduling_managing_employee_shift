@@ -33,10 +33,9 @@ const getAllUser = async (req, res) => {
         path: "assigned_employees_id",
         populate: { path: "role", select: "-permissions" },
       });
-      
+
       list = list.assigned_employees_id;
     }
-    console.log(list)
     res
       .status(200)
       .json({ success: true, message: "Data Found Successfully", data: list });
@@ -64,7 +63,9 @@ const createUser = async (req, res) => {
       req.body.role = role_id._id || null;
     }
     const user = await User.create(req.body);
-
+    await user
+      .populate({ path: "role", select: "_id role_name" })
+      .execPopulate();
     res
       .status(201)
       .json({ success: true, message: "User created", data: user });
@@ -183,7 +184,7 @@ const deleteUser = async (req, res) => {
     }
     await User.findByIdAndDelete(req.params.user_id);
     res
-      .status(200)
+      .status(204)
       .json({ success: true, message: "User deleted", data: user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
