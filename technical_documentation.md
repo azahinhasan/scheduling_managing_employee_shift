@@ -33,32 +33,43 @@ Here I am going to provide some information about this app.
 
 - `POST - /auth/sign_in`: User for sign. Send into the body:<br/>
   For administrator
+
   ```
   {
   "email":"admin@test.com",
   "password":"123456"
   }
   ```
+
   For supervisor
+
   ```
   {
   "email":"supervisor@test.com",
   "password":"123456"
   }
   ```
+
   For employee
+
   ```
   {
   "email":"employee@test.com",
   "password":"123456"
   }
   ```
+
+  <br/>
+
 - `GET - /api/user/get_all`: Retrieve user data based on user role. Administrators get all user data, supervisors get the users (employees) assigned under them, and employees receive a 401 Unauthorized response.
 - `POST - /api/user/create`: Create a new user. If requested by administrators, the new user will inherit the specified role. Requests from supervisors and employees will get a 401 Unauthorized response. <br/> If creating requested by `none` type user then the new created user will be assigned the role of an employee (used for Sign Up).
 - `PUT - /api/user/update/:user_id`: Update user information. Administrators can modify any information of any user. Supervisors can only update the active_status of users assigned under them. Any user type can update their own basic information.
 - `DELETE - /api/user/delete/:user_id`: Delete a user account. Only administrators have the authority to delete any user's account. Additionally, the account of any administrator cannot be deleted.
 - `POST - /api/user/change_role/:user_id`: Change the role of a user between employee and supervisor. Only administrators have the authority to perform this action. When changing the role, if the current role is a supervisor, their information from SupervisorEmployeeRelations collection will be removed (i.e., unselecting all employees assigned to them). If the current role is an employee, they will be removed from their supervisor.
 - `GET - /api/user/get_by_id`: Retrieve user information(same user who requested for the info) based on the decoded user ID from the token.
+
+ <br/>
+
 - `GET - /api/shift/get_all`: Retrieve all shifts. Administrators receive list of all shifts. Supervisors get only the shifts where their employees are assigned. Employees receive the shifts where they are assigned.
 - `POST - /api/shift/create`: Create a new shift. Only administrators have the authority to perform this action. If the new shift's date, start_time, and end_time match with any already existing shift, the new shift will not be added.
 - `PUT - /api/shift/update/:shift_id`: Update a shift. Only administrators have the authority to perform this action. If the updated shift's date, start_time, and end_time match with any already existing shift, the shift will not be updated.
@@ -90,5 +101,15 @@ Here I am going to provide some information about this app.
   "action_type":"switch"
   }
   ```
-  <br/>
   Here administrators can do this action for any employee but supervisors can do it for only their employees.
+
+<br/>
+
+- `GET - /api/supervisor_employee_relations/all_assigned_employee`: Retrieve a list of all supervisors and their assigned employees. Administrators get a list of all supervisors and their respective employees. Supervisors receive details only about their assigned group of employees. Employees get 401.
+- `POST - /api/supervisor_employee_relations/untag_employee_from_supervisor`: Administrators can remove or untagging employee from any supervisor.
+- `PUT - /api/supervisor_employee_relations/untag_employee_from_supervisor`: Tag or assign any employee to any supervisor. Only administrators have the authority to perform this action. If the employee is already assigned to this supervisor, an error will be thrown. If the employee is assigned under another supervisor, they will be untagged from the current supervisor and added under the new one.
+
+<br/>
+
+- `GET - /api/role/get_all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and _id.
+- `POST - /api/role/get_all`: Add a new role(between "administrator", "supervisor" and "employee"). Users need to send only role_name, and default permissions will be assigned from the model. Only administrator have access to perform.

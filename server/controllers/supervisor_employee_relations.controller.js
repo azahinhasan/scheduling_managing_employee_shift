@@ -13,15 +13,25 @@ const SupervisorEmployeeRelation = require("../models/supervisor_employee_relati
  * @param {object} res - response object.
  * @requires ../models/SupervisorEmployeeRelation.model
  * @returns {JSON} - if success returns the object as data else error.
+ * @example
+ *  Request Example:
+ *  {
+ *   "employee_id": "employee_id",
+ *    "supervisor_id": "supervisor_id",
+ *  }
+ * @authorization
+ *  Ensure a valid token is included in the request header for authorization.
  */
 const tagEmployeeToSupervisor = async (req, res) => {
   try {
-
     const existingSupervisor = await SupervisorEmployeeRelation.findOne({
       supervisor_id: req.body.supervisor_id,
     }); //checking is supervisor_id exist or not into the SupervisorEmployeeRelation collection
 
-    if (existingSupervisor&&existingSupervisor.assigned_employees_id.includes(req.body.employee_id)) {
+    if (
+      existingSupervisor &&
+      existingSupervisor.assigned_employees_id.includes(req.body.employee_id)
+    ) {
       //checking is employee_id already exist or not under requested supervisor.
       return res.status(400).json({
         success: false,
@@ -52,7 +62,9 @@ const tagEmployeeToSupervisor = async (req, res) => {
       });
     }
 
-    res.status(200).json({ success: true, message: "Employee successfully tagged" });
+    res
+      .status(200)
+      .json({ success: true, message: "Employee successfully tagged" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -68,6 +80,13 @@ const tagEmployeeToSupervisor = async (req, res) => {
  * @param {object} res - response object.
  * @requires ../models/SupervisorEmployeeRelation.model
  * @returns {JSON} - if success returns the object as data else error.
+ *  * @example
+ *  Request Example:
+ *  {
+ *   "employee_id": "employee_id"
+ *  }
+ * @authorization
+ *  Ensure a valid token is included in the request header for authorization.
  */
 const untagSupervisor = async (req, res) => {
   try {
@@ -80,8 +99,10 @@ const untagSupervisor = async (req, res) => {
         $pull: { assigned_employees_id: req.body.employee_id },
       }
     );
-   
-    res.status(200).json({ success: true, message: "Employee successfully untagged" });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Employee successfully untagged" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -97,6 +118,8 @@ const untagSupervisor = async (req, res) => {
  * @param {object} res - response object.
  * @requires ../models/user.model
  * @returns {JSON} - if success returns the object as data else error.
+ * @authorization
+ *  Ensure a valid token is included in the request header for authorization.
  */
 const getEmployeeBySupervisorID = async (req, res) => {
   try {
@@ -113,11 +136,9 @@ const getEmployeeBySupervisorID = async (req, res) => {
     //if role is supervisor will return only his group.
     //and if  administrator will return all groups.
 
-    const data = await SupervisorEmployeeRelation
-      .find(filterWithID)
-      .populate({
-        path: "assigned_employees_id supervisor_id",
-      });
+    const data = await SupervisorEmployeeRelation.find(filterWithID).populate({
+      path: "assigned_employees_id supervisor_id",
+    });
 
     if (!data) {
       return res.status(404).json({ success: false, message: "No data found" });
@@ -132,5 +153,5 @@ const getEmployeeBySupervisorID = async (req, res) => {
 module.exports = {
   tagEmployeeToSupervisor,
   getEmployeeBySupervisorID,
-  untagSupervisor
+  untagSupervisor,
 };
