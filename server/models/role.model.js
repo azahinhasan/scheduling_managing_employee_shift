@@ -14,36 +14,42 @@ const RoleSchema = new mongoose.Schema({
     default: function () {
       if (this.role_name === "administrator") {
         return [
-          "role/get_all",
+          "role/get-all",
           "role/create",
-          "user/get_all",
+          "supervisor-employee-relations/untag-employee-from-supervisor",
+          "user/get-all",
+          "user/get-all-in-table",
           "user/create",
           "user/update",
-          "user/change_role",
-          "user/get_by_id",
+          "user/change-role",
+          "user/get-by-id",
           "user/delete",
-          "supervisor_employee_relations/all_assigned_employee",
-          "supervisor_employee_relations/tag_employee_to_supervisor",
-          "shift/get_all",
+          "supervisor-employee-relations/all-assigned-employee",
+          "supervisor-employee-relations/tag-employee-to-supervisor",
+          "shift/get-all",
           "shift/create",
           "shift/update",
-          "shift/modify_employees_shift",
-          "shift/get_by_id",
+          "shift/modify-employees-shift",
+          "shift/get-by-id",
           "shift/delete",
         ];
       } else if (this.role_name === "supervisor") {
         return [
           "user/update",
-          "user/get_by_id",
-          "shift/get_all",
-          "shift/modify_employees_shift",
-          "supervisor_employee_relations/all_assigned_employee",
+          "user/get-all",
+          "user/get-by-id",
+          "supervisor-employee-relations/all-assigned-employee",
+          "shift/modify-employees-shift",
+          "role/get-all",
+          "shift/get-all",
         ];
       } else {
         return [
           "user/create",
           "user/update",
-          "shift/get_all"
+          "user/get-by-id",
+          "role/get-all",
+          "shift/get-all",
         ];
       }
     },

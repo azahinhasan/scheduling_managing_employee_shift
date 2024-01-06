@@ -11,6 +11,7 @@ import {
   Tooltip,
   Grid,
   Autocomplete,
+  Alert,
 } from "@mui/material";
 
 import { UserContext } from "../../context/user.context";
@@ -225,6 +226,12 @@ const ShiftList = () => {
               </Button>
             </Grid>
           )}
+          <Grid item xs={12} md={12}>
+            <Alert variant="outlined" severity="warning">
+              Autocomplete functionality will suggest all employee names for
+              administrators and the names of assigned employees for supervisor.{" "}
+            </Alert>
+          </Grid>
         </Grid>
         <TableContainer>
           <Table aria-label="simple table">
@@ -268,7 +275,7 @@ const ShiftList = () => {
                     {row.end_time}
                   </TableCell>
                   <TableCell>
-                    {(
+                    {
                       <>
                         <Tooltip title="EDIT" placement="left">
                           <EditIcon
@@ -289,7 +296,7 @@ const ShiftList = () => {
                           />
                         </Tooltip>
                       </>
-                    )}
+                    }
                     <Tooltip title="Employees" placement="right">
                       <GroupsIcon
                         name=""
