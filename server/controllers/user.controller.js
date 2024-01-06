@@ -29,10 +29,9 @@ const getAllUser = async (req, res) => {
       //if supervisor will return all user/employee data who are tagged to him.
       list = await SupervisorEmployeeRelations.findOne({
         supervisor_id: requestedUser._id,
-      })
-      .populate([
+      }).populate([
         { path: "assigned_employees_id", select: "-hashed_password" },
-        { path: "role", select: "-permissions" }
+        { path: "role", select: "-permissions" },
       ]);
 
       list = list.assigned_employees_id;
@@ -108,7 +107,7 @@ const getUserByID = async (req, res) => {
  * @memberof UserController
  * @async
  * @method
- * @description .
+ * @description Updating own info or other user info.
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @requires ../models/user.model
@@ -125,19 +124,10 @@ const updateUser = async (req, res) => {
     if (requestedUser.role === "administrator") {
       //if administrator then he can update any info for any user.
       await User.findByIdAndUpdate(req.params.user_id, req.body);
-    } else if (
-      requestedUser.role === "employee" ||
-      res.locals.requestedUser._id === req.params.user_id
-    ) {
+    } else if (res.locals.requestedUser._id === req.params.user_id) {
       //if employee or user requesting for this profile then he can update his basic info.
-      await User.updateOne(
-        { _id: req.params.user_id },
-        {
-          full_name: req.body.full_name,
-          email: req.body.email,
-          contact_details: req.body.contact_details,
-        }
-      );
+      const { role, active_status, ...allOtherInfo } = req.body;
+      await User.updateOne({ _id: req.params.user_id }, allOtherInfo);
     } else if (requestedUser.role === "supervisor") {
       //if supervisor then he can update active_status of his employees.
       const verifyEmployee = await SupervisorEmployeeRelations.find({

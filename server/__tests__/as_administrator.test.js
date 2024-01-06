@@ -159,4 +159,4 @@ describe("Running test as Administrator", () => {
       .set("Authorization", token);
     expect(delete_new_supervisor.status).toBe(204);
   });
-});
+ });
