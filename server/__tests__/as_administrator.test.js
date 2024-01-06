@@ -14,7 +14,7 @@ const randomString = Math.random().toString(36).substring(7);
 
 beforeAll(async () => {
   const response = await request
-    .post("/auth/sign_in")
+    .post("/auth/sign-in")
     .send({ email: "test@test.com", password: "123456" });
   expect(response.status).toBe(200);
   expect(response.body.success).toBe(true);
@@ -24,7 +24,7 @@ beforeAll(async () => {
 describe("Running test as Administrator", () => {
   it("should responds with json and status 200 for successfully get all roles", async () => {
     const get_roles = await request
-      .get("/api/role/get_all")
+      .get("/api/role/get-all")
       .set("Authorization", token);
     roles = get_roles.body.data;
     expect(get_roles.status).toBe(200);
@@ -33,7 +33,7 @@ describe("Running test as Administrator", () => {
 
   it("should responds with json and status 200 for successfully get user list", async () => {
     const users = await request
-      .get("/api/user/get_all")
+      .get("/api/user/get-all")
       .set("Authorization", token);
     expect(users.status).toBe(200);
     expect(users.body.success).toBe(true);
@@ -72,7 +72,7 @@ describe("Running test as Administrator", () => {
   it("should responds with 200 after tagging this employee to supervisor", async () => {
     const tag_employee_to_supervisor = await request
       //tagging them
-      .put("/api/supervisor_employee_relations/tag_employee_to_supervisor")
+      .put("/api/supervisor-employee-relations/tag-employee-to-supervisor")
       .set("Authorization", token)
       .send({
         supervisor_id: newly_created.supervisor.data._id,
@@ -101,7 +101,7 @@ describe("Running test as Administrator", () => {
 
   it("should responds with 200 after add employee in this shift", async () => {
     const add_employee_in_shift = await request
-      .post("/api/shift/modify_employees_shift")
+      .post("/api/shift/modify-employees-shift")
       .set("Authorization", token)
       .send({
         new_shift_id: newly_created.shift.data._id,
@@ -114,7 +114,7 @@ describe("Running test as Administrator", () => {
 
   it("should responds with 400 after add employee in this same shift", async () => {
     const add_employee_in_shift = await request
-      .post("/api/shift/modify_employees_shift")
+      .post("/api/shift/modify-employees-shift")
       .set("Authorization", token)
       .send({
         new_shift_id: newly_created.shift.data._id,
@@ -129,7 +129,7 @@ describe("Running test as Administrator", () => {
 
   it("should responds with 400 after remove employee from this same shift", async () => {
     const remove_employee_from_shift = await request
-      .post("/api/shift/modify_employees_shift")
+      .post("/api/shift/modify-employees-shift")
       .set("Authorization", token)
       .send({
         current_shift_id: newly_created.shift.data._id,

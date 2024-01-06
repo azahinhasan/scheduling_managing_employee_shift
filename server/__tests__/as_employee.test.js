@@ -26,14 +26,14 @@ beforeAll(async () => {
   expect(create_new_employee.body.success).toBe(true);
 
   const sign_in_as_new_employee = await request
-    .post("/auth/sign_in")
+    .post("/auth/sign-in")
     .send({ email: create_new_employee.body.data.email, password: "123456" });
   expect(sign_in_as_new_employee.status).toBe(200);
   expect(sign_in_as_new_employee.body.success).toBe(true);
   token.employee = sign_in_as_new_employee.body.token;
 
   const sign_in_as_admin = await request
-    .post("/auth/sign_in")
+    .post("/auth/sign-in")
     .send({ email: "test@test.com", password: "123456" });
   expect(sign_in_as_admin.status).toBe(200);
   expect(sign_in_as_admin.body.success).toBe(true);
@@ -43,7 +43,7 @@ beforeAll(async () => {
 describe("Running test as Employee", () => {
   it("should responds with status 401 and get no users", async () => {
     const users = await request
-      .get("/api/user/get_all")
+      .get("/api/user/get-all")
       .set("Authorization", token.employee);
     expect(users.status).toBe(401);
     expect(users.body.success).toBe(false);
@@ -60,7 +60,7 @@ describe("Running test as Employee", () => {
     expect(update_info.status).toBe(200);
 
     const find_update_data = await request
-      .get("/api/user/get_by_id")
+      .get("/api/user/get-by-id")
       .set("Authorization", token.employee);
     expect(find_update_data.status).toBe(200);
     expect(find_update_data.body.success).toBe(true);
@@ -70,14 +70,14 @@ describe("Running test as Employee", () => {
 
   it("should responds with status 200 and list of his(employee's) shifts", async () => {
     const get_all_shift_as_admin = await request
-      .get("/api/shift/get_all")
+      .get("/api/shift/get-all")
       .set("Authorization", token.admin);
     expect(get_all_shift_as_admin.status).toBe(200);
     expect(get_all_shift_as_admin.body.success).toBe(true);
 
     let add_employee_in_shift = await request
       //adding employee into shift
-      .post("/api/shift/modify_employees_shift")
+      .post("/api/shift/modify-employees-shift")
       .set("Authorization", token.admin)
       .send({
         new_shift_id: get_all_shift_as_admin.body.data[0]._id,
@@ -88,7 +88,7 @@ describe("Running test as Employee", () => {
     expect(add_employee_in_shift.body.success).toBe(true);
 
     const get_all_shift_employee = await request
-      .get("/api/shift/get_all")
+      .get("/api/shift/get-all")
       .set("Authorization", token.employee);
     expect(get_all_shift_employee.status).toBe(200);
     expect(get_all_shift_employee.body.success).toBe(true);
