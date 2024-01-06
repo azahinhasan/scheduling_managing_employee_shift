@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 
-router.route('/sign_in')
+router.route('/sign-in')
     .post(authCtrl.signIn)
     
-router.route('/sign_out')
+router.route('/sign-out')
     .get(authCtrl.signOut)
 
 module.exports = router;

@@ -26,7 +26,7 @@ app.use(cors());
 
 // Mount routes
 app.use("/api/user", usersRoutes);
-app.use("/api/supervisor_employee_relations", supervisorEmployeeRoutes);
+app.use("/api/supervisor-employee-relations", supervisorEmployeeRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/role", roleRoutes);
 app.use("/api/shift", shiftRoutes);
