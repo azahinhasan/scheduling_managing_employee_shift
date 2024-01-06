@@ -13,7 +13,6 @@ const ConfirmationDialogShift = ({
   handleClose,
   currentSelectedShift,
   getAllShiftHandler,
-  isRemoving,
 }) => {
   const [msg, setMsg] = useState({
     text: "",
@@ -29,11 +28,11 @@ const ConfirmationDialogShift = ({
 
   const handleYes = async () => {
     const { _id, ...otherInfo } = currentSelectedShift;
-    deleteShift(_id).then((res) => {
+    deleteShift(_id).then(res => {
+      console.log(res)
       if (res.success) {
         getAllShiftHandler();
         handleClose();
-        // setcurrentSelectedShift("");
       } else {
         setMsg({
           text: res.message,

@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const signIn = async (body) => {
   try {
-    let response = await fetch(process.env.REACT_APP_PROXY + `/auth/sign_in`, {
+    let response = await fetch(process.env.REACT_APP_PROXY + `/auth/sign-in`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -40,7 +40,7 @@ const signUp = async (body) => {
 const getAllRoles = async () => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/role/get_all`,
+      process.env.REACT_APP_PROXY + `/api/role/get-all`,
       {
         method: "GET",
         headers: {
@@ -59,7 +59,7 @@ const getAllRoles = async () => {
 const getUserList = async () => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/user/get_all`,
+      process.env.REACT_APP_PROXY + `/api/user/get-all`,
       {
         method: "GET",
         headers: {
@@ -135,7 +135,7 @@ const deleteUser = async (userId) => {
 const changeRole = async (userId) => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/user/change_role/` + userId,
+      process.env.REACT_APP_PROXY + `/api/user/change-role/` + userId,
       {
         method: "POST",
         headers: {
@@ -154,7 +154,7 @@ const changeRole = async (userId) => {
 const getUserInfoById= async (userId) => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/user/get_by_id`,
+      process.env.REACT_APP_PROXY + `/api/user/get-by-id`,
       {
         method: "GET",
         headers: {
@@ -173,7 +173,7 @@ const getUserInfoById= async (userId) => {
 const getAllGroups= async () => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/all_assigned_employee`,
+      process.env.REACT_APP_PROXY + `/api/supervisor-employee-relations/all-assigned-employee`,
       {
         method: "GET",
         headers: {
@@ -192,7 +192,7 @@ const getAllGroups= async () => {
 const tagToSupervisor= async body => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/tag_employee_to_supervisor`,
+      process.env.REACT_APP_PROXY + `/api/supervisor-employee-relations/tag-employee-to-supervisor`,
       {
         method: "PUT",
         headers: {
@@ -212,7 +212,7 @@ const tagToSupervisor= async body => {
 const untagFromSupervisor= async body => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/supervisor_employee_relations/untag_employee_from_supervisor`,
+      process.env.REACT_APP_PROXY + `/api/supervisor-employee-relations/untag-employee-from-supervisor`,
       {
         method: "POST",
         headers: {
@@ -232,7 +232,7 @@ const untagFromSupervisor= async body => {
 const getAllShift = async () => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/shift/get_all`,
+      process.env.REACT_APP_PROXY + `/api/shift/get-all`,
       {
         method: "GET",
         headers: {
@@ -310,7 +310,7 @@ const updateShift = async (body,id) => {
 const modifyEmployeeShift = async (body,id) => {
   try {
     let response = await fetch(
-      process.env.REACT_APP_PROXY + `/api/shift/modify_employees_shift`,
+      process.env.REACT_APP_PROXY + `/api/shift/modify-employees-shift`,
       {
         method: "POST",
         headers: {

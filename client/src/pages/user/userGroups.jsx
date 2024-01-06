@@ -79,7 +79,7 @@ const UserGroups = () => {
         />
 
         {permissionCheck(
-          "supervisor_employee_relations/tag_employee_to_supervisor"
+          "supervisor-employee-relations/tag-employee-to-supervisor"
         ) && (
           <Grid container spacing={1}>
             <Grid item xs={12} md={9} style={{ textAlign: "left" }}>
@@ -110,7 +110,7 @@ const UserGroups = () => {
                 borderRadius: "10px",
               }}
             >
-              <h3>Supervisor: {group.supervisor_id.full_name}</h3>
+              <h3>Supervisor: {group.supervisor_id?.full_name||"None"}</h3>
               <TableContainer>
                 <Table aria-label="simple table">
                   <TableHead>

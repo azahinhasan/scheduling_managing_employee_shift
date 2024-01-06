@@ -17,6 +17,7 @@ const SupervisorEmployeeRelations = require("../models/supervisor_employee_relat
  */
 const getAllRole = async (req, res) => {
   try {
+ 
     const roles = await Role.find().select({
       role_name: 1,
       id: 1,

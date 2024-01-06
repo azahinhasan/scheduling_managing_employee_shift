@@ -9,6 +9,7 @@ const UserContextProvider = (props) => {
 
   useEffect(() => {
     Cookies.get("token")&&getAllRoles().then((res) => {
+      console.log(res)
       if (res.success) {
         setRoles(res.data);
         const temp = res.data.filter((el) => el.permissions.length > 1);

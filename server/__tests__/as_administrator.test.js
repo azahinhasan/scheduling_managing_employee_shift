@@ -139,24 +139,24 @@ describe("Running test as Administrator", () => {
     expect(remove_employee_from_shift.status).toBe(200);
   });
 
-  it("should responds with 204 after successful deleting shift", async () => {
+  it("should responds with 200 after successful deleting shift", async () => {
     const delete_new_shift = await request
       //deleting newly created shift
       .delete("/api/shift/delete/" + newly_created.shift.data._id)
       .set("Authorization", token);
-    expect(delete_new_shift.status).toBe(204);
+    expect(delete_new_shift.status).toBe(200);
   });
 
-  it("should responds with 204 after successful deleting employee and supervisor", async () => {
+  it("should responds with 200 after successful deleting employee and supervisor", async () => {
     const delete_new_employee = await request
       //deleting newly created employee
       .delete("/api/user/delete/" + newly_created.employee.data._id)
       .set("Authorization", token);
-    expect(delete_new_employee.status).toBe(204);
+    expect(delete_new_employee.status).toBe(200);
     const delete_new_supervisor = await request
       //deleting newly created employee
       .delete("/api/user/delete/" + newly_created.supervisor.data._id)
       .set("Authorization", token);
-    expect(delete_new_supervisor.status).toBe(204);
+    expect(delete_new_supervisor.status).toBe(200);
   });
  });

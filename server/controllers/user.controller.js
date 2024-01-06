@@ -175,7 +175,7 @@ const deleteUser = async (req, res) => {
     }
     await User.findByIdAndDelete(req.params.user_id);
     res
-      .status(204)
+      .status(200)
       .json({ success: true, message: "User deleted", data: user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

@@ -24,7 +24,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <CustomPaper>
         <Grid container spacing={2}>
-          {permissionCheck('user/get_all_in_table')&&<Grid item xs={12} md={4}>
+          {permissionCheck('user/get-all-in-table')&&<Grid item xs={12} md={4}>
             <div
               style={style}
               onClick={() => navigate("/users")}

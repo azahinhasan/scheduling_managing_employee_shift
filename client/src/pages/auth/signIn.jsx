@@ -19,13 +19,12 @@ const SignIn = () => {
   const handleSubmit = async () => {
     signIn(credentials).then((res) => {
       if (res.success) {
-        Cookies.set("token", res.token);
-        // Cookies.set(
-        //   "name",
-        //   res.data.first_name + " " + res.data.last_name
-        // );
-       navigate("/dashboard");
-       window.location.reload();
+        Cookies.set("token", res.token, {
+          expires: 1,
+          sameSite: "Strict",
+        });
+        navigate("/dashboard");
+        window.location.reload();
         setMsg({
           text: res.message,
           color: "green",

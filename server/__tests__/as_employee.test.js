@@ -109,11 +109,11 @@ describe("Running test as Employee", () => {
     ).toBe(true); //checking all shifts that this employee get by calling /api/shift/get_all contains his id.
   });
 
-  it("should responds with 204 after successful deleting employee and supervisor", async () => {
+  it("should responds with 200 after successful deleting employee and supervisor", async () => {
     const delete_new_employee = await request
       //deleting newly created employee
       .delete("/api/user/delete/" + newly_created.employee._id)
       .set("Authorization", token.admin);
-    expect(delete_new_employee.status).toBe(204);
+    expect(delete_new_employee.status).toBe(200);
   });
 });

@@ -104,11 +104,11 @@ describe("Running test as Supervisor", () => {
           );
       expect(verify).toBe(true);
     });
-    it("should responds with 204 after successful deleting employee", async () => {
+    it("should responds with 200 after successful deleting employee", async () => {
       const delete_new_employee = await request
         //deleting newly created employee
         .delete("/api/user/delete/" + newly_created.employee.data._id)
         .set("Authorization", token.admin);
-      expect(delete_new_employee.status).toBe(204);
+      expect(delete_new_employee.status).toBe(200);
     });
 });

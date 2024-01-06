@@ -130,9 +130,10 @@ const createShift = async (req, res) => {
  */
 const deleteShift = async (req, res) => {
   try {
+    console.log(req.params)
     const shift = await Shift.findByIdAndDelete(req.params.shift_id);
     res
-      .status(204)
+      .status(200)
       .json({ success: true, message: "Shift deleted", data: shift });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
