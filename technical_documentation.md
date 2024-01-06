@@ -59,3 +59,36 @@ Here I am going to provide some information about this app.
 - `DELETE - /api/user/delete/:user_id`: Delete a user account. Only administrators have the authority to delete any user's account. Additionally, the account of any administrator cannot be deleted.
 - `POST - /api/user/change_role/:user_id`: Change the role of a user between employee and supervisor. Only administrators have the authority to perform this action. When changing the role, if the current role is a supervisor, their information from SupervisorEmployeeRelations collection will be removed (i.e., unselecting all employees assigned to them). If the current role is an employee, they will be removed from their supervisor.
 - `GET - /api/user/get_by_id`: Retrieve user information(same user who requested for the info) based on the decoded user ID from the token.
+- `GET - /api/shift/get_all`: Retrieve all shifts. Administrators receive list of all shifts. Supervisors get only the shifts where their employees are assigned. Employees receive the shifts where they are assigned.
+- `POST - /api/shift/create`: Create a new shift. Only administrators have the authority to perform this action. If the new shift's date, start_time, and end_time match with any already existing shift, the new shift will not be added.
+- `PUT - /api/shift/update/:shift_id`: Update a shift. Only administrators have the authority to perform this action. If the updated shift's date, start_time, and end_time match with any already existing shift, the shift will not be updated.
+- `DELETE - /api/shift/delete/:shift_id`: Delete shift. Only administrators have the authority to perform this action.
+- `GET - /api/shift/get_by_id/:shift_id`: Retrieve specific shift information by ID. Only administrators have the authority to perform this action.
+- `POST - /api/shift/modify_employees_shift`: Modify employee assignments in a shift. This endpoint is used for adding, removing, or modifying employees assigned to a specific shift. The specific action is determined by sending the following object in the request body:<br/> <br/>
+  For adding into the shift
+  ```
+  {
+  "employee_id":"employee_id",
+  "new_shift_id":"new_shift_id",
+  "action_type":"add"
+  }
+  ```
+  For removing into the shift
+  ```
+  {
+  "employee_id":"employee_id",
+  "current_shift_id":"current_shift_id",
+  "action_type":"remove"
+  }
+  ```
+  For switching into the shift(only shifts between same day.If want to switch other day shift the add.)
+  ```
+  {
+  "employee_id":"employee_id",
+  "current_shift_id":"current_shift_id",
+  "new_shift_id":"new_shift_id",
+  "action_type":"switch"
+  }
+  ```
+  <br/>
+  Here administrators can do this action for any employee but supervisors can do it for only their employees.

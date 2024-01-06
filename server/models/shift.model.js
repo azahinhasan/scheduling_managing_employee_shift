@@ -13,10 +13,6 @@ const ShiftSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please Start Date"],
   },
-  // end_date: {
-  //   type: Date,
-  //   required: [true, "Please End Date"],
-  // },
   start_time: {
     type: String, //12h format time
     required: [true, "Please Start Time"],

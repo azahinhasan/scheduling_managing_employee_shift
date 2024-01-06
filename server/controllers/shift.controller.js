@@ -201,7 +201,7 @@ const modifyShiftOfEmployee = async (req, res) => {
     switch (req.body.action_type) {
       case "add":
         //if employee do not have previous shift in given date
-        //require from client employee_id,new_shift
+        //require from client employee_id,new_shift_id
         if (!req.body.new_shift_id) {
           return res
             .status(400)
@@ -223,7 +223,7 @@ const modifyShiftOfEmployee = async (req, res) => {
         break;
       case "switch":
         //changing shift in same day
-        //require from client employee_id,new_shift,current_shift_id
+        //require from client employee_id,new_shift_id,current_shift_id
         if (!req.body.current_shift_id || !req.body.new_shift_id) {
           return res.status(400).json({
             success: false,

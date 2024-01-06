@@ -19,4 +19,4 @@
   <br/> It will take us into the server container. Also, user can access it from the docker desktop. There is an option called `Open in terminal` into three dots beside all containers.
 - After doing that user can see `/app #` in the terminal. Now type the following command:`npm run test`. It will start Jest.
 
-#### Note: other information related to the app is given in `technical_documentation.md` file. Which is located at the root of this project.
+#### Note: other information related to the app is given in `technical_documentation.md` file. Which is located at the root of this project. And credentials for testing can be found into this file as well.
