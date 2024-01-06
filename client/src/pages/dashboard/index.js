@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomPaper from "../../components/paper";
@@ -11,54 +11,46 @@ import { UserContext } from "../../context/user.context";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const style={
+  const style = {
     border: "4px solid black",
     padding: "5px",
     borderRadius: "10px",
     margin: "5px",
     cursor: "pointer",
-  }
+  };
   const { permissionCheck } = useContext(UserContext);
   return (
     <div>
       <h1>Dashboard</h1>
       <CustomPaper>
         <Grid container spacing={2}>
-          {permissionCheck('user/get-all-in-table')&&<Grid item xs={12} md={4}>
-            <div
-              style={style}
-              onClick={() => navigate("/users")}
-            >
-              <FaList style={{ fontSize: "80px" }} />
-              <br />
-              All Users
-            </div>
-          </Grid>}
-          <Grid item xs={12} md={4}>
-            <div
-              style={style}
-              onClick={() => navigate("/user-groups")}
-            >
-              <GrGroup style={{ fontSize: "80px" }} />
-              <br />
-              User Groups
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <div
-              style={style}
-              onClick={() => navigate("/shifts")}
-            >
+          {permissionCheck("user/get-all-in-table") && (
+            <Grid item xs={12} md={6}>
+              <div style={style} onClick={() => navigate("/users")}>
+                <FaList style={{ fontSize: "80px" }} />
+                <br />
+                All Users
+              </div>
+            </Grid>
+          )}
+          {permissionCheck("supervisor-employee-relations/all-assigned-employee") && (
+            <Grid item xs={12} md={6}>
+              <div style={style} onClick={() => navigate("/user-groups")}>
+                <GrGroup style={{ fontSize: "80px" }} />
+                <br />
+                User Groups
+              </div>
+            </Grid>
+          )}
+          <Grid item xs={12} md={6}>
+            <div style={style} onClick={() => navigate("/shifts")}>
               <MdOutlineViewTimeline style={{ fontSize: "80px" }} />
               <br />
               All Shifts
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <div
-              style={style}
-              onClick={() => navigate("/user")}
-            >
+          <Grid item xs={12} md={6}>
+            <div style={style} onClick={() => navigate("/user")}>
               <CgProfile style={{ fontSize: "80px" }} />
               <br />
               Profile

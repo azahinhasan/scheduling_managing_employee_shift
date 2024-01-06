@@ -36,7 +36,7 @@ Here I am going to provide some information about this app.
 
   ```
   {
-  "email":"admin@test.com",
+  "email":"administrator@test.com",
   "password":"123456"
   }
   ```

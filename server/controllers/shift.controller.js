@@ -130,7 +130,6 @@ const createShift = async (req, res) => {
  */
 const deleteShift = async (req, res) => {
   try {
-    console.log(req.params)
     const shift = await Shift.findByIdAndDelete(req.params.shift_id);
     res
       .status(200)

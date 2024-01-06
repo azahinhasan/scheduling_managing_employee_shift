@@ -35,9 +35,13 @@ const AllRoutes = () => {
       ) : (
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
-          {permissionCheck('user/get-all-in-table')&&<Route path="/users" element={<UserList />} />}
+          {permissionCheck("user/get-all-in-table") && (
+            <Route path="/users" element={<UserList />} />
+          )}
           <Route path="/user" element={<UserProfile />} />
-          <Route path="/user-groups" element={<UserGroups />} />
+          {permissionCheck(
+            "supervisor-employee-relations/all-assigned-employee"
+          ) && <Route path="/user-groups" element={<UserGroups />} />}
           <Route path="/shifts" element={<ShiftList />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
