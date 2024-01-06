@@ -23,21 +23,20 @@ beforeAll(async () => {
 
 describe("Running test as Administrator", () => {
   it("should responds with json and status 200 for successfully get all roles", async () => {
-    const response = await request
+    const get_roles = await request
       .get("/api/role/get_all")
       .set("Authorization", token);
-    roles = response.body.data;
-    expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
+    roles = get_roles.body.data;
+    expect(get_roles.status).toBe(200);
+    expect(get_roles.body.success).toBe(true);
   });
 
   it("should responds with json and status 200 for successfully get user list", async () => {
-    const response = await request
+    const users = await request
       .get("/api/user/get_all")
       .set("Authorization", token);
-
-    expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
+    expect(users.status).toBe(200);
+    expect(users.body.success).toBe(true);
   });
 
   it("should responds with 201 after creating employee and supervisor", async () => {
@@ -65,7 +64,6 @@ describe("Running test as Administrator", () => {
         password: "123456",
         role: roles.find((el) => el.role_name === "employee")._id, //id of employee role
       });
-    console.log(create_new_employee.body);
     newly_created.employee = create_new_employee.body;
     expect(create_new_employee.status).toBe(201);
     expect(create_new_employee.body.success).toBe(true);

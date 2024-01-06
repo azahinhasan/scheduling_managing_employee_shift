@@ -70,6 +70,7 @@ const getShiftByID = async (req, res) => {
   try {
     const shift = await Shift.findById(req.params.shift_id).populate({
       path: "assigned_employee",
+      select: "-hashed_password"
     });
 
     if (!shift) {

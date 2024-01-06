@@ -22,17 +22,18 @@ const getAllUser = async (req, res) => {
     let list = [];
     if (requestedUser.role === "administrator") {
       //if administrator will return all user data.
-      list = await User.find({ _id: { $ne: requestedUser._id } }).populate(
-        "role"
-      );
+      list = await User.find({ _id: { $ne: requestedUser._id } })
+        .populate("role")
+        .select("-hashed_password");
     } else if (requestedUser.role === "supervisor") {
       //if supervisor will return all user/employee data who are tagged to him.
       list = await SupervisorEmployeeRelations.findOne({
         supervisor_id: requestedUser._id,
-      }).populate({
-        path: "assigned_employees_id",
-        populate: { path: "role", select: "-permissions" },
-      });
+      })
+      .populate([
+        { path: "assigned_employees_id", select: "-hashed_password" },
+        { path: "role", select: "-permissions" }
+      ]);
 
       list = list.assigned_employees_id;
     }
