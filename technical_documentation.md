@@ -31,7 +31,7 @@ Here I am going to provide some information about this app.
 
 #### All API endpoints
 
-- `POST - /auth/sign_in`: User for sign. Send into the body:<br/>
+- `POST - /auth/sign-in`: User for sign. Send into the body:<br/>
   For administrator
 
   ```
@@ -61,21 +61,21 @@ Here I am going to provide some information about this app.
 
   <br/>
 
-- `GET - /api/user/get_all`: Retrieve user data based on user role. Administrators get all user data, supervisors get the users (employees) assigned under them, and employees receive a 401 Unauthorized response.
+- `GET - /api/user/get-all`: Retrieve user data based on user role. Administrators get all user data, supervisors get the users (employees) assigned under them, and employees receive a 401 Unauthorized response.
 - `POST - /api/user/create`: Create a new user. If requested by administrators, the new user will inherit the specified role. Requests from supervisors and employees will get a 401 Unauthorized response. <br/> If creating requested by `none` type user then the new created user will be assigned the role of an employee (used for Sign Up).
 - `PUT - /api/user/update/:user_id`: Update user information. Administrators can modify any information of any user. Supervisors can only update the active_status of users assigned under them. Any user type can update their own basic information.
 - `DELETE - /api/user/delete/:user_id`: Delete a user account. Only administrators have the authority to delete any user's account. Additionally, the account of any administrator cannot be deleted.
-- `POST - /api/user/change_role/:user_id`: Change the role of a user between employee and supervisor. Only administrators have the authority to perform this action. When changing the role, if the current role is a supervisor, their information from SupervisorEmployeeRelations collection will be removed (i.e., unselecting all employees assigned to them). If the current role is an employee, they will be removed from their supervisor.
-- `GET - /api/user/get_by_id`: Retrieve user information(same user who requested for the info) based on the decoded user ID from the token.
+- `POST - /api/user/change-role/:user_id`: Change the role of a user between employee and supervisor. Only administrators have the authority to perform this action. When changing the role, if the current role is a supervisor, their information from SupervisorEmployeeRelations collection will be removed (i.e., unselecting all employees assigned to them). If the current role is an employee, they will be removed from their supervisor.
+- `GET - /api/user/get-by-id`: Retrieve user information(same user who requested for the info) based on the decoded user ID from the token.
 
  <br/>
 
-- `GET - /api/shift/get_all`: Retrieve all shifts. Administrators receive list of all shifts. Supervisors get only the shifts where their employees are assigned. Employees receive the shifts where they are assigned.
+- `GET - /api/shift/get-all`: Retrieve all shifts. Administrators receive list of all shifts. Supervisors get only the shifts where their employees are assigned. Employees receive the shifts where they are assigned.
 - `POST - /api/shift/create`: Create a new shift. Only administrators have the authority to perform this action. If the new shift's date, start_time, and end_time match with any already existing shift, the new shift will not be added.
 - `PUT - /api/shift/update/:shift_id`: Update a shift. Only administrators have the authority to perform this action. If the updated shift's date, start_time, and end_time match with any already existing shift, the shift will not be updated.
 - `DELETE - /api/shift/delete/:shift_id`: Delete shift. Only administrators have the authority to perform this action.
-- `GET - /api/shift/get_by_id/:shift_id`: Retrieve specific shift information by ID. Only administrators have the authority to perform this action.
-- `POST - /api/shift/modify_employees_shift`: Modify employee assignments in a shift. This endpoint is used for adding, removing, or modifying employees assigned to a specific shift. The specific action is determined by sending the following object in the request body:<br/> <br/>
+- `GET - /api/shift/get-by-id/:shift_id`: Retrieve specific shift information by ID. Only administrators have the authority to perform this action.
+- `POST - /api/shift/modify-employees-shift`: Modify employee assignments in a shift. This endpoint is used for adding, removing, or modifying employees assigned to a specific shift. The specific action is determined by sending the following object in the request body:<br/> <br/>
   For adding into the shift
   ```
   {
@@ -105,11 +105,11 @@ Here I am going to provide some information about this app.
 
 <br/>
 
-- `GET - /api/supervisor_employee_relations/all_assigned_employee`: Retrieve a list of all supervisors and their assigned employees. Administrators get a list of all supervisors and their respective employees. Supervisors receive details only about their assigned group of employees. Employees get 401.
-- `POST - /api/supervisor_employee_relations/untag_employee_from_supervisor`: Administrators can remove or untagging employee from any supervisor.
-- `PUT - /api/supervisor_employee_relations/untag_employee_from_supervisor`: Tag or assign any employee to any supervisor. Only administrators have the authority to perform this action. If the employee is already assigned to this supervisor, an error will be thrown. If the employee is assigned under another supervisor, they will be untagged from the current supervisor and added under the new one.
+- `GET - /api/supervisor-employee-relations/all-assigned-employee`: Retrieve a list of all supervisors and their assigned employees. Administrators get a list of all supervisors and their respective employees. Supervisors receive details only about their assigned group of employees. Employees get 401.
+- `POST - /api/supervisor-employee-relations/untag-employee-from-supervisor`: Administrators can remove or untagging employee from any supervisor.
+- `PUT - /api/supervisor-employee-relations/untag-employee-from-supervisor`: Tag or assign any employee to any supervisor. Only administrators have the authority to perform this action. If the employee is already assigned to this supervisor, an error will be thrown. If the employee is assigned under another supervisor, they will be untagged from the current supervisor and added under the new one.
 
 <br/>
 
-- `GET - /api/role/get_all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and _id.
-- `POST - /api/role/get_all`: Add a new role(between "administrator", "supervisor" and "employee"). Users need to send only role_name, and default permissions will be assigned from the model. Only administrator have access to perform.
+- `GET - /api/role/get-all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and _id.
+- `POST - /api/role/get-all`: Add a new role(between "administrator", "supervisor" and "employee"). Users need to send only role_name, and default permissions will be assigned from the model. Only administrator have access to perform.
