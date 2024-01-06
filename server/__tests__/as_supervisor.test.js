@@ -1,8 +1,7 @@
 const config = require("../config/config");
-const { generateRandomTime } = require("../helpers");
 const supertest = require("supertest");
 const request = supertest("http://localhost:" + config.PORT);
-//Some tests as administrator
+//Some tests as supervisor
 let token = {
   supervisor: "",
   admin: "",
