@@ -2,6 +2,26 @@
 
 Here I am going to provide some information about this app.
 
+## Credentials
+For Admin:
+```
+  administrator@test.com
+```
+For Supervisor:
+```
+  supervisor@test.com
+  supervisor2@test.com
+```
+For Employee:
+```
+  employee@test.com
+  employee2@test.com
+```
+Password(same of all of them):
+```
+  123456
+```
+
 ## Technology Used
 
 - React js
@@ -113,3 +133,5 @@ Here I am going to provide some information about this app.
 
 - `GET - /api/role/get-all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and _id.
 - `POST - /api/role/get-all`: Add a new role(between "administrator", "supervisor" and "employee"). Users need to send only role_name, and default permissions will be assigned from the model. Only administrator have access to perform.
+
+#### [Note: Token required for all of above api exist auth/sign-in]
