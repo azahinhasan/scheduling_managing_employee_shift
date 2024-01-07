@@ -3,7 +3,7 @@ import CustomPaper from "../../components/paper";
 import UserGroupDialog from "./dialogsBoxes/userGroupDialog";
 import { getAllGroups, getUserList } from "../api-pages";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
-import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
+import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import {
   Button,
   Table,
@@ -58,7 +58,7 @@ const UserGroups = () => {
   const onClickHandler = (data, action) => {
     setActionType(action);
     setOpenDialog(true);
-    setCurrentSelectedUser( ["switch","untag"].includes(action) ? data : {});
+    setCurrentSelectedUser(["switch", "untag"].includes(action) ? data : {});
   };
 
   const handleCloseDialog = () => {
@@ -102,69 +102,71 @@ const UserGroups = () => {
 
         {groupData?.map((group) => {
           return (
-            <div
-              style={{
-                border: "2px solid grey",
-                margin: "7px 2px",
-                padding: "5px",
-                borderRadius: "10px",
-              }}
-            >
-              <h3>Supervisor: {group.supervisor_id?.full_name||"None"}</h3>
-              <TableContainer>
-                <Table aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>
-                        <b>Name</b>
-                      </TableCell>
-                      <TableCell>
-                        <b>Email</b>
-                      </TableCell>
-                      <TableCell>
-                        <b>Phone</b>
-                      </TableCell>
-                      <TableCell>
-                        <b>Options</b>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {group.assigned_employees_id.map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>{row.full_name}</TableCell>
-                        <TableCell>{row.email}</TableCell>
-                        <TableCell>{row?.contact_details?.phone}</TableCell>
+            group.supervisor_id?.full_name && (
+              <div
+                style={{
+                  border: "2px solid grey",
+                  margin: "7px 2px",
+                  padding: "5px",
+                  borderRadius: "10px",
+                }}
+              >
+                <h3>Supervisor: {group.supervisor_id?.full_name || "None"}</h3>
+                <TableContainer>
+                  <Table aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
                         <TableCell>
-                          <Tooltip title="Untag" placement="left">
-                            <PersonRemoveAlt1Icon
-                              name=""
-                              onClick={() => {
-                                onClickHandler(row, "untag");
-                              }}
-                              style={{ color: "red" }}
-                            />
-                          </Tooltip>
-                          &nbsp;
-                          <Tooltip
-                            title="CHANGE ACTIVE STATUS"
-                            placement="right"
-                          >
-                            <SwitchRightIcon
-                              name=""
-                              onClick={() => {
-                                onClickHandler(row, "switch");
-                              }}
-                              style={{ color: "#003a96" }}
-                            />
-                          </Tooltip>
+                          <b>Name</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>Email</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>Phone</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>Options</b>
                         </TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
+                    </TableHead>
+                    <TableBody>
+                      {group.assigned_employees_id.map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell>{row.full_name}</TableCell>
+                          <TableCell>{row.email}</TableCell>
+                          <TableCell>{row?.contact_details?.phone}</TableCell>
+                          <TableCell>
+                            <Tooltip title="Untag" placement="left">
+                              <PersonRemoveAlt1Icon
+                                name=""
+                                onClick={() => {
+                                  onClickHandler(row, "untag");
+                                }}
+                                style={{ color: "red" }}
+                              />
+                            </Tooltip>
+                            &nbsp;
+                            <Tooltip
+                              title="CHANGE ACTIVE STATUS"
+                              placement="right"
+                            >
+                              <SwitchRightIcon
+                                name=""
+                                onClick={() => {
+                                  onClickHandler(row, "switch");
+                                }}
+                                style={{ color: "#003a96" }}
+                              />
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            )
           );
         })}
       </CustomPaper>

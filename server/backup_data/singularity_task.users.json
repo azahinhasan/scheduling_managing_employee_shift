@@ -1,0 +1,216 @@
+[{
+  "_id": {
+    "$oid": "6593a39ddc76809fb8ec445e"
+  },
+  "active_status": true,
+  "full_name": "test_admin",
+  "email": "administrator@test.com",
+  "salt": "888065382923",
+  "hashed_password": "855c354eefbb6e37b6049185c8ac8e779abfef8bb40209efcff110e3228c6115",
+  "role": {
+    "$oid": "6595acb0a9bbd244c0f45cbe"
+  },
+  "__v": 0,
+  "contact_details": {
+    "phone": "123456789",
+    "address": "2323434"
+  }
+},
+{
+  "_id": {
+    "$oid": "6599971952781a2f6466221b"
+  },
+  "active_status": true,
+  "email": "supervisor@test.com",
+  "salt": "1372952307477",
+  "hashed_password": "1a65320bfdf4930903861707085668cc6418fd42e80ddb41278f5ff83e7cf886",
+  "full_name": "Riya Khan",
+  "contact_details": {
+    "phone": "01211111111",
+    "address": "Mirpur"
+  },
+  "role": {
+    "$oid": "6595acc3a9bbd244c0f45cc2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6599973552781a2f64662224"
+  },
+  "active_status": true,
+  "email": "supervisor2@test.com",
+  "salt": "1173982612760",
+  "hashed_password": "11c304a5c383ab826e938e082365ba192d9d061c34786cb820cd44d204077f0a",
+  "full_name": "Anaya Ahmed",
+  "contact_details": {
+    "phone": "01223423423",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595acc3a9bbd244c0f45cc2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6599974d52781a2f6466222d"
+  },
+  "active_status": true,
+  "email": "supervisor3@test.com",
+  "salt": "1642886900738",
+  "hashed_password": "2118b350927ec8bcbd5ef48788a9b4b2091f6dd9655205f11afdd86827b31159",
+  "full_name": "Maya Roy",
+  "contact_details": {
+    "phone": "12232345345",
+    "address": "supervisor3"
+  },
+  "role": {
+    "$oid": "6595acc3a9bbd244c0f45cc2"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6599976d52781a2f64662236"
+  },
+  "active_status": true,
+  "email": "employee@test.com",
+  "salt": "1159344079318",
+  "hashed_password": "1e4e86d3f96ff40c395bc27176ab3414dae3d6517e2c71b76d4f26447c303ef4",
+  "full_name": "Aryan Choudhury",
+  "contact_details": {
+    "phone": "0122324545",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6599978652781a2f6466223f"
+  },
+  "active_status": true,
+  "email": "employee2@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "Zahid Rahman",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659997ad162d011038e950ca"
+  },
+  "active_status": true,
+  "email": "employee3@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "Sanvi Ali",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659997c1162d011038e950cb"
+  },
+  "active_status": true,
+  "email": "employee4@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "Kabir Haque",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659997cc162d011038e950cc"
+  },
+  "active_status": true,
+  "email": "employee5@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "employee5",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659997d9162d011038e950cd"
+  },
+  "active_status": true,
+  "email": "employee6@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "Armaan Chowdhury",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659997e4162d011038e950ce"
+  },
+  "active_status": true,
+  "email": "employee7@test.com",
+  "salt": "1460309338338",
+  "hashed_password": "f5fb045192d06c29fa4bc9a4abb1e902eee2b7b34d7672bbf1c531a860219e3e",
+  "full_name": "Sanvi Islam",
+  "contact_details": {
+    "phone": "123456789",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65999801162d011038e950d0"
+  },
+  "active_status": true,
+  "email": "supervisor4@test.com",
+  "salt": "1173982612760",
+  "hashed_password": "11c304a5c383ab826e938e082365ba192d9d061c34786cb820cd44d204077f0a",
+  "full_name": "Rohan Haque",
+  "contact_details": {
+    "phone": "01223423423",
+    "address": "Dhaka"
+  },
+  "role": {
+    "$oid": "6595acc3a9bbd244c0f45cc2"
+  },
+  "__v": 0
+}]

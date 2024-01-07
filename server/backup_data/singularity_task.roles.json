@@ -1,0 +1,57 @@
+[{
+  "_id": {
+    "$oid": "6595acb0a9bbd244c0f45cbe"
+  },
+  "role_name": "administrator",
+  "permissions": [
+    "role/get-all",
+    "role/create",
+    "supervisor-employee-relations/untag-employee-from-supervisor",
+    "user/get-all",
+    "user/get-all-in-table",
+    "user/create",
+    "user/update",
+    "user/change-role",
+    "user/get-by-id",
+    "user/delete",
+    "supervisor-employee-relations/all-assigned-employee",
+    "supervisor-employee-relations/tag-employee-to-supervisor",
+    "shift/get-all",
+    "shift/create",
+    "shift/update",
+    "shift/modify-employees-shift",
+    "shift/get-by-id",
+    "shift/delete"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6595acc3a9bbd244c0f45cc2"
+  },
+  "role_name": "supervisor",
+  "permissions": [
+    "user/update",
+    "user/get-all",
+    "user/get-by-id",
+    "supervisor-employee-relations/all-assigned-employee",
+    "shift/modify-employees-shift",
+    "role/get-all",
+    "shift/get-all"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6595accaa9bbd244c0f45cc5"
+  },
+  "role_name": "employee",
+  "permissions": [
+    "user/create",
+    "user/update",
+    "user/get-by-id",
+    "role/get-all",
+    "shift/get-all"
+  ],
+  "__v": 0
+}]

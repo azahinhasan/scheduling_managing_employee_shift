@@ -1,0 +1,122 @@
+[{
+  "_id": {
+    "$oid": "6599984f52781a2f6466227d"
+  },
+  "label_color": "white",
+  "assigned_employee": [
+    {
+      "$oid": "6599976d52781a2f64662236"
+    },
+    {
+      "$oid": "6599978652781a2f6466223f"
+    },
+    {
+      "$oid": "659997c1162d011038e950cb"
+    },
+    {
+      "$oid": "659a4be705c4793b5c42898b"
+    },
+    {
+      "$oid": "659997ad162d011038e950ca"
+    }
+  ],
+  "end_time": "12:00 PM",
+  "start_time": "12:00 PM",
+  "date": {
+    "$date": "2024-01-08T00:00:00.000Z"
+  },
+  "label": "Day-1",
+  "__v": 5
+},
+{
+  "_id": {
+    "$oid": "6599986d52781a2f64662285"
+  },
+  "label_color": "#3e51fa",
+  "assigned_employee": [
+    {
+      "$oid": "6599976d52781a2f64662236"
+    }
+  ],
+  "end_time": "3:00 PM",
+  "start_time": "2:00 PM",
+  "date": {
+    "$date": "2024-01-07T00:00:00.000Z"
+  },
+  "label": "Day-2",
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6599987e52781a2f6466228d"
+  },
+  "label_color": "orange",
+  "assigned_employee": [
+    {
+      "$oid": "659997cc162d011038e950cc"
+    }
+  ],
+  "end_time": "12:00 PM",
+  "start_time": "12:00 PM",
+  "date": {
+    "$date": "2024-01-16T00:00:00.000Z"
+  },
+  "label": "Night-1",
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6599989852781a2f64662295"
+  },
+  "label_color": "white",
+  "assigned_employee": [],
+  "end_time": "2:00 AM",
+  "start_time": "12:00 AM",
+  "date": {
+    "$date": "2024-01-16T00:00:00.000Z"
+  },
+  "label": "Night-2",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "659998b252781a2f6466229d"
+  },
+  "label_color": "white",
+  "assigned_employee": [
+    {
+      "$oid": "659997cc162d011038e950cc"
+    },
+    {
+      "$oid": "659997c1162d011038e950cb"
+    },
+    {
+      "$oid": "6599978652781a2f6466223f"
+    }
+  ],
+  "end_time": "4:00 PM",
+  "start_time": "1:00 PM",
+  "date": {
+    "$date": "2024-01-09T00:00:00.000Z"
+  },
+  "label": "Day-5",
+  "__v": 3
+},
+{
+  "_id": {
+    "$oid": "659998cd52781a2f646622a5"
+  },
+  "label_color": "#f52242",
+  "assigned_employee": [
+    {
+      "$oid": "6599976d52781a2f64662236"
+    }
+  ],
+  "end_time": "3:00 AM",
+  "start_time": "1:00 AM",
+  "date": {
+    "$date": "2024-01-17T00:00:00.000Z"
+  },
+  "label": "Night-5",
+  "__v": 1
+}]
