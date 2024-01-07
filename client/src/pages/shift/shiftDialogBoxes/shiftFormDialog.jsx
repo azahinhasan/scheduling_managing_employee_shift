@@ -148,6 +148,7 @@ const ShiftFormDialog = ({
                 label="Label Color"
                 variant="outlined"
                 margin="normal"
+               // style={{marginTop:"0px"}}
                 value={currentSelectedShift?.label_color}
                 onChange={(e) => {
                   setCurrentSelectedShift({
@@ -157,7 +158,7 @@ const ShiftFormDialog = ({
                 }}
               />
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={4}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   label="Date"
@@ -181,7 +182,7 @@ const ShiftFormDialog = ({
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid item xs={6} md={6}>
+            <Grid item xs={6} md={4}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <TimePicker
                   label="Start Time"
@@ -196,7 +197,7 @@ const ShiftFormDialog = ({
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid item xs={6} md={6}>
+            <Grid item xs={6} md={4}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <TimePicker
                   label="End Time"

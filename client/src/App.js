@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./App.css";
+import "./App.styles.scss";
 import UserContextProvider from "./context/user.context";
 
 import AllRoutes from "./pages/all-routes";
