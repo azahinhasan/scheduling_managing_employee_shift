@@ -30,11 +30,18 @@ const getAllUser = async (req, res) => {
       list = await SupervisorEmployeeRelations.findOne({
         supervisor_id: requestedUser._id,
       }).populate([
-        { path: "assigned_employees_id", select: "-hashed_password" },
-        { path: "role", select: "-permissions" },
+        {
+          path: "assigned_employees_id",
+          select: "-hashed_password",
+          populate: {
+            path: "role",
+            select: "-permissions",
+          },
+        },
       ]);
 
       list = list?.assigned_employees_id ? list.assigned_employees_id : [];
+
     }
     res
       .status(200)

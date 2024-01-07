@@ -17,14 +17,14 @@ const randomString = Math.random().toString(36).substring(7);
 beforeAll(async () => {
   const response = await request
     .post("/auth/sign-in")
-    .send({ email: "test2@test.com", password: "123456" });
+    .send({ email: "supervisor@test.com", password: "123456" });
   expect(response.status).toBe(200);
   expect(response.body.success).toBe(true);
   token.supervisor = response.body.token;
 
   const response2 = await request
     .post("/auth/sign-in")
-    .send({ email: "test@test.com", password: "123456" });
+    .send({ email: "administrator@test.com", password: "123456" });
   expect(response2.status).toBe(200);
   expect(response2.body.success).toBe(true);
   token.admin = response2.body.token;
@@ -82,29 +82,29 @@ describe("Running test as Supervisor", () => {
     expect(list_of_employees.status).toBe(200);
     expect(list_of_employees.body.success).toBe(true);
 
-      const all_assigned_employee = await request
-        //list of employees
-        .get("/api/supervisor-employee-relations/all-assigned-employee")
-        .set("Authorization", token.supervisor);
-      expect(all_assigned_employee.status).toBe(200);
-      expect(all_assigned_employee.body.success).toBe(true);
-      let temp_employees = [
-        ...new Set(list_of_employees.body?.data?.map((el) => el._id)),
-      ];
-      let temp_employees_under_supervisor =
-        all_assigned_employee.body.data[0]?.assigned_employees_id;
-      temp_employees_under_supervisor = [
-        ...new Set(temp_employees_under_supervisor?.map((el) => el._id)),
-      ];
-      const verify =
-        temp_employees.length === temp_employees_under_supervisor.length &&
-        temp_employees
-          .sort()
-          .every(
-            (value, index) =>
-              value === temp_employees_under_supervisor.sort()[index]
-          );
-      expect(verify).toBe(true);
+    const all_assigned_employee = await request
+      //list of employees
+      .get("/api/supervisor-employee-relations/all-assigned-employee")
+      .set("Authorization", token.supervisor);
+    expect(all_assigned_employee.status).toBe(200);
+    expect(all_assigned_employee.body.success).toBe(true);
+    let temp_employees = [
+      ...new Set(list_of_employees.body?.data?.map((el) => el._id)),
+    ];
+    let temp_employees_under_supervisor =
+      all_assigned_employee.body.data[0]?.assigned_employees_id;
+    temp_employees_under_supervisor = [
+      ...new Set(temp_employees_under_supervisor?.map((el) => el._id)),
+    ];
+    const verify =
+      temp_employees.length === temp_employees_under_supervisor.length &&
+      temp_employees
+        .sort()
+        .every(
+          (value, index) =>
+            value === temp_employees_under_supervisor.sort()[index]
+        );
+    expect(verify).toBe(true);
   });
   it("should responds with 200 after successful deleting employee", async () => {
     const delete_new_employee = await request

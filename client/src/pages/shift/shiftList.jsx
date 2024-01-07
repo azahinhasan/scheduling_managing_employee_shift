@@ -102,7 +102,8 @@ const ShiftList = () => {
     const filteredData = rows.filter((item) => {
       const itemDate = new Date(item.date);
       return (
-        (itemDate >= filterInfo.startDate && itemDate <= filterInfo.endDate) ||
+        (itemDate >= filterInfo.startDate?.setUTCHours(0, 0, 0, 0) &&
+          itemDate <= filterInfo.endDate?.setUTCHours(23, 0, 0, 0)) ||
         item.assigned_employee.find(
           (el) => el.full_name === filterInfo.employeeName
         )
@@ -131,6 +132,7 @@ const ShiftList = () => {
         />
 
         <EmployeesOfShiftDialog
+          employees={employees}
           currentSelectedShift={currentSelectedShift}
           open={openEmployeesDialog}
           handleClose={handleCloseDialog}
@@ -227,9 +229,17 @@ const ShiftList = () => {
             </Grid>
           )}
           <Grid item xs={12} md={12}>
-            <Alert variant="outlined" severity="warning">
-              Autocomplete functionality will suggest all employee names for
-              administrators and the names of assigned employees for supervisor.{" "}
+            <Alert
+              variant="outlined"
+              severity="warning"
+              style={{ textAlign: "left" }}
+            >
+              - Autocomplete functionality will suggest all employee names for
+              administrators and the names of assigned employees for supervisor.
+              <br />
+              - Can filter by Date or Employee or with both.
+              <br />- Filter with only Date keep employee autocomplete empty and
+              only with employee keep Date is current date.
             </Alert>
           </Grid>
         </Grid>

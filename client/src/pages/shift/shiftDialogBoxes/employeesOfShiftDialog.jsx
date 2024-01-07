@@ -17,7 +17,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Divider,
   Snackbar,
   Alert,
 } from "@mui/material";
@@ -26,7 +25,7 @@ import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import EastIcon from "@mui/icons-material/East";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
-import { getUserList, modifyEmployeeShift } from "../../api-pages";
+import { modifyEmployeeShift } from "../../api-pages";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -38,7 +37,7 @@ const EmployeesOfShiftDialog = ({
   handleClose,
   getAllShiftHandler,
   shifts,
-  setCurrentSelectedShift,
+  employees,
 }) => {
   const [msg, setMsg] = useState({
     text: "",
@@ -88,14 +87,7 @@ const EmployeesOfShiftDialog = ({
 
   const getAllEmployeesHandler = () => {
     setEmployeeShifts([]);
-    getUserList().then((res) => {
-      if (res.success) {
-        const temp = res.data.filter(
-          (el) => el.role?.role_name?.toLowerCase() === "employee"
-        );
-        setEmployeesForAdd(temp);
-      }
-    });
+    setEmployeesForAdd(employees);
   };
 
   return (
@@ -268,7 +260,7 @@ const EmployeesOfShiftDialog = ({
           </Grid>
         </DialogContent>
       </Dialog>
-      <Snackbar open={msg.text} autoHideDuration={6000}>
+      <Snackbar open={msg.text} autoHideDuration={3000}  onClose={()=>setMsg({...msg,text:""})}>
         <Alert severity={msg.color} sx={{ width: "100%" }}>
           {msg.text}
         </Alert>

@@ -34,7 +34,7 @@ beforeAll(async () => {
 
   const sign_in_as_admin = await request
     .post("/auth/sign-in")
-    .send({ email: "test@test.com", password: "123456" });
+    .send({ email: "administrator@test.com", password: "123456" });
   expect(sign_in_as_admin.status).toBe(200);
   expect(sign_in_as_admin.body.success).toBe(true);
   token.admin = sign_in_as_admin.body.token;

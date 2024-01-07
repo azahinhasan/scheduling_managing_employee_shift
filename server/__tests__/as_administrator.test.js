@@ -15,7 +15,7 @@ const randomString = Math.random().toString(36).substring(7);
 beforeAll(async () => {
   const response = await request
     .post("/auth/sign-in")
-    .send({ email: "test@test.com", password: "123456" });
+    .send({ email: "administrator@test.com", password: "123456" });
   expect(response.status).toBe(200);
   expect(response.body.success).toBe(true);
   token = response.body.token;
@@ -159,4 +159,4 @@ describe("Running test as Administrator", () => {
       .set("Authorization", token);
     expect(delete_new_supervisor.status).toBe(200);
   });
- });
+});
