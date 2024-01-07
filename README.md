@@ -8,7 +8,7 @@
   or <br/>
   `docker compose up -d client` [if the user doesn't want to see logs in the same terminal] <br/>
   <br/>
-  Give some time. Then the server will run on `PORT:5000` and the client on `PORT:3000`
+  Give some time. Then the server will run on `PORT:5000` and the client on `PORT:3000`(make sure there is nothing running on those port).
   <br/> [PS: if users have an old version of docker then they might have to add a hyphen like this docker-compose]
   
 

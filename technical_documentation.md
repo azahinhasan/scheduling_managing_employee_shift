@@ -162,4 +162,4 @@ Password(same of all of them):
 
 - Role-Based Permission Management: Permissions are systematically managed within our 'Role' collection. These permissions are pivotal for authorization processes. In specific scenarios, the base role (as identified in the token) is instrumental in modifying data or actions on the server side.
   
-- Client: In client side for design mostly use in-line css,scss and material ui. Also client side is mobile responsive.
+- Client: In client side for designing mostly use in-line css,scss and material ui. Also client side is mobile responsive.
