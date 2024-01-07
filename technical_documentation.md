@@ -3,21 +3,29 @@
 Here I am going to provide some information about this app.
 
 ## Credentials
+
 For Admin:
+
 ```
   administrator@test.com
 ```
+
 For Supervisor:
+
 ```
   supervisor@test.com
   supervisor2@test.com
 ```
+
 For Employee:
+
 ```
   employee@test.com
   employee2@test.com
 ```
+
 Password(same of all of them):
+
 ```
   123456
 ```
@@ -40,18 +48,18 @@ Password(same of all of them):
 
 #### Folder structure (/server is for backend)
 
-- `server/models` : Holds all schema models.
-- `server/controllers` : Manages the business logic and actions.
-- `server/middleware` : Handles authorization functionality.
-- `server/routes` : Defines all API endpoints.
+- `server/index.js` : This file acts as the central entry point for the server, initializing and starting the server application.
+- `server/config` : This directory contains all the configuration settings and keys. These configurations are imported and utilized throughout the application for various functionalities.
+- `server/middleware` : Dedicated to middleware functions, primarily focused on handling authorization and request processing.
+- `server/models` : This folder stores all the database schema models. It defines the structure and relationships of the data used in the application.
+- `server/controllers` : Responsible for managing the core business logic of the application. This directory contains controllers that handle the actions based on the requests received.
+- `server/routes` : Defines the API routes/endpoints. It specifies the paths and methods for client-server communication.
 - `server/helpers` : Contains reusable functions utilized across multiple files.
-- `server/_tests_` : Encompasses all Jest test cases.
-- `server/index.js` : Serves as the main entry point for the server.
-- `server/config` : Houses configuration keys declared and used by other files.
+- `server/_tests_` : Contains all the Jest test cases for the application. This directory is essential for implementing test-driven development and ensuring code reliability.
 
 #### All API endpoints
 
-- `POST - /auth/sign-in`: User for sign. Send into the body:<br/>
+- `POST - /auth/sign-in`: User for sign. Send into the body:<br/>\
   For administrator
 
   ```
@@ -131,7 +139,26 @@ Password(same of all of them):
 
 <br/>
 
-- `GET - /api/role/get-all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and _id.
+- `GET - /api/role/get-all`: Retrieve all roles. The requested user's role will include permissions if matched otherwise, it will only contain role_name and \_id.
 - `POST - /api/role/get-all`: Add a new role(between "administrator", "supervisor" and "employee"). Users need to send only role_name, and default permissions will be assigned from the model. Only administrator have access to perform.
 
 #### [Note: Token required for all of above api exist auth/sign-in]
+
+### Frontend
+
+#### Folder structure (/client is for frontend)
+
+- `client/App.js` : This is the primary entry point of client application, where the core functionality begins.
+- `client/src/pages` : This directory contains all the main pages of application. These pages are rendered on the client side and contain all route declarations.
+- `client/src/context` : This folder houses Context API implementations. These are utilized across multiple components for consistent state management.
+- `client/src/components` : This directory is dedicated to reusable components.
+- `client/public` : This is where static files such as HTML, CSS, images, and other public assets are stored. These files are accessible to the client and are essential for the look and feel of the application.
+
+### Some information related security and others
+
+- Token Encryption Using JWT: Utilizing JWT (JSON Web Tokens) for token encryption. Each token encapsulates the user's ID and their assigned role. This approach is essential as certain server-side actions require the user's ID or role for execution. Each token is valid of 1 day.
+
+- Password Hashing with Unique Salt Keys: For securing user passwords, implemented hashing via the Crypto library. A distinctive feature of my approach is the use of unique salt keys for each user. This method enhances the security of user credentials, ensuring robust authentication.
+
+- Role-Based Permission Management: Permissions are systematically managed within our 'Role' collection. These permissions are pivotal for authorization processes. In specific scenarios, the base role (as identified in the token) is instrumental in modifying data or actions on the server side.
+- Client: In client side for design mostly use in-line css,scss and material ui. Also client side is mobile responsive.
