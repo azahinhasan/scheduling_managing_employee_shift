@@ -234,12 +234,17 @@ const ShiftList = () => {
               severity="warning"
               style={{ textAlign: "left" }}
             >
+              <b>Note:</b>
+              <br/>
               - Autocomplete functionality will suggest all employee names for
               administrators and the names of assigned employees for supervisor.
               <br />
               - Can filter by Date or Employee or with both.
-              <br />- Filter with only Date keep employee autocomplete empty and
+              <br />
+              - Filter with only Date keep employee autocomplete empty and
               only with employee keep Date is current date.
+              <br />
+              - If any employee need switch there shift in same day then fist remove from current shift in same day then add employee under new shift.
             </Alert>
           </Grid>
         </Grid>

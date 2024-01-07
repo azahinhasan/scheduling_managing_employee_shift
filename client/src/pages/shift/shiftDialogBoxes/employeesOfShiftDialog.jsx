@@ -21,7 +21,7 @@ import {
   Alert,
 } from "@mui/material";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
-
+import { UserContext } from "../../../context/user.context";
 import EastIcon from "@mui/icons-material/East";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
@@ -43,7 +43,7 @@ const EmployeesOfShiftDialog = ({
     text: "",
     color: "",
   });
-
+  const { permissionCheck } = useContext(UserContext);
   const [employeeShifts, setEmployeeShifts] = useState([]);
   const [employeesForAdd, setEmployeesForAdd] = useState([]);
 
@@ -117,7 +117,7 @@ const EmployeesOfShiftDialog = ({
           <Grid container spacing={1}>
             <Grid item xs={12} md={8}>
               {" "}
-              <Button
+              {permissionCheck("shift/modify-employees-shift")&&<Button
                 style={{ height: "55px" }}
                 fullWidth
                 variant="contained"
@@ -125,7 +125,7 @@ const EmployeesOfShiftDialog = ({
                 onClick={() => getAllEmployeesHandler()}
               >
                 <AddIcon /> Add Employee
-              </Button>
+              </Button>}
             </Grid>
 
             <Grid item xs={12} md={8}>
