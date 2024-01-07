@@ -12,7 +12,6 @@ const server = http.Server(app);
 const config = require("./config/config");
 
 // Import Routes
-
 const usersRoutes = require("./routes/user.routes");
 const authRoutes = require("./routes/auth.routes");
 const supervisorEmployeeRoutes = require("./routes/supervisor_employee_relations.routes");
@@ -43,7 +42,6 @@ mongoose
   .catch((err) => console.log(err));
 mongoose.Promise = global.Promise;
 
-// Home
 // Home
 app.get("/", function (req, res) {
   res
