@@ -1,4 +1,4 @@
-# Singularity task
+# Employee shift scheduling
 
 ### Instruction to run this app
 - Make sure the user has docker on the system
